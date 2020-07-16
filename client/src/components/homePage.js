@@ -1,6 +1,6 @@
 import React from "react";
 import Web3 from "web3";
-//import ipfs from "../js/ipfshttp";
+import ipfs from "../js/ipfshttp";
 import fleekStorage from '@fleekhq/fleek-storage-js'
 import { ipfsABI } from "../js/IPFS";
 import { rolesABI } from "../js/roles";
@@ -207,32 +207,33 @@ export default class HomePage extends React.Component {
 
   }
 
-  onSubmit = (event) => {
+  onSubmit =async (event) => {
     // console.log(this.state.contract);
-    //fs.readFile(filePath, async (error, fileData) => {
+   // fs.readFile(filePath, async (error, fileData) => {
       const uploadedFile = await fleekStorage.upload({
         apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
         apiSecret: 'GMFzg7TFJC2fjhwoz9slkfnncmV/TAHK/4WVeI0qpYY=',
         key: 'my-file-key',
         data: this.state.buffer,
       });
-   // })
-    ipfs.add(this.state.buffer, (error, result) => {
-      var today = new Date();
+    //})
+    console.log(uploadedFile);
+    // ipfs.add(this.state.buffer, (error, result) => {
+    //   var today = new Date();
 
-      var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
-      this.state.ipfscontract.methods.publisherUploadQues(result[0].hash, this.state.postReward, date).send({ from: this.state.account }).then((r) => {
+    //   var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
+    //   this.state.ipfscontract.methods.publisherUploadQues(result[0].hash, this.state.postReward, date).send({ from: this.state.account }).then((r) => {
 
-        this.loadBlockchainData();
-        // this.setState({})
-
-
-      })
-      if (error)
-        console.log(error);
+    //     this.loadBlockchainData();
+    //     // this.setState({})
 
 
-    })
+    //   })
+    //   if (error)
+    //     console.log(error);
+
+
+    // })
 
 
   }
