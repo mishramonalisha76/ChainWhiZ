@@ -213,11 +213,15 @@ export default class HomePage extends React.Component {
       const uploadedFile = await fleekStorage.upload({
         apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
         apiSecret: 'GMFzg7TFJC2fjhwoz9slkfnncmV/TAHK/4WVeI0qpYY=',
-        key: 'my-file-key',
+        key: 'my-file-key2',
         data: this.state.buffer,
       });
     //})
     console.log(uploadedFile);
+    const myFile = await fleekStorage.getFileFromHash({
+      hash: 'bafybeicxgtvq5uvppx5pttxgvqnzkme5ckyzi6yvo4dy7oq5pw5bctxs4e',
+    })
+    console.log(myFile);
     // ipfs.add(this.state.buffer, (error, result) => {
     //   var today = new Date();
 
