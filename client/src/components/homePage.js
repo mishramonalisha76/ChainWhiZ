@@ -1,6 +1,7 @@
 import React from "react";
 import Web3 from "web3";
-import ipfs from "../js/ipfshttp";
+//import ipfs from "../js/ipfshttp";
+import fleekStorage from '@fleekhq/fleek-storage-js'
 import { ipfsABI } from "../js/IPFS";
 import { rolesABI } from "../js/roles";
 import Card from '@material-ui/core/Card';
@@ -208,6 +209,14 @@ export default class HomePage extends React.Component {
 
   onSubmit = (event) => {
     // console.log(this.state.contract);
+    //fs.readFile(filePath, async (error, fileData) => {
+      const uploadedFile = await fleekStorage.upload({
+        apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
+        apiSecret: 'GMFzg7TFJC2fjhwoz9slkfnncmV/TAHK/4WVeI0qpYY=',
+        key: 'my-file-key',
+        data: this.state.buffer,
+      });
+   // })
     ipfs.add(this.state.buffer, (error, result) => {
       var today = new Date();
 
