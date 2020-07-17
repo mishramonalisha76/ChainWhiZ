@@ -103,7 +103,10 @@ export default class HomePage extends React.Component {
       console.log("line no 102")
       const ques = await this.state.ipfscontract.methods.getQuestionKey(i).call({ from: fromAcc });
 
-
+      const myFile = await fleekStorage.getFileFromHash({
+        hash: ques,
+      })
+      console.log(myFile);
 
       const details = await this.state.ipfscontract.methods.displayQuestionDetails(ques).call({ from: fromAcc });
       const seconds = new Date().getTime() / 1000;
@@ -112,7 +115,7 @@ export default class HomePage extends React.Component {
 
       var temp = {};
 
-      temp = { "address": details[0], "question": ques, "timestamp": details[2], "label": true, "result": "" };
+      temp = { "address": details[0], "question": myFile, "timestamp": details[2], "label": true, "result": "" };
 
       if (parseInt(details[1]) <= seconds) {
 
@@ -132,7 +135,7 @@ export default class HomePage extends React.Component {
             }
           }
 
-        
+
           if (ressolver != "0x0000000000000000000000000000000000000000") {
             this.state.ipfscontract.methods.setResult(ques, ressolver).send({ from: details[0] }).then((r) => {
 
@@ -142,18 +145,18 @@ export default class HomePage extends React.Component {
 
             })
           }
-          
+
           temp.result = ressolver;
           temp.label = false;
         }
         temp.result = details[3];
         temp.label = false;
-       
+
 
       }
 
       questions.push(temp);
-      
+
 
     }
     // var temp = { "address": "0xdda59C23CfDe94b5d2577Df6BB6b801bfD381f3c", "question": "Qmc6horV2Yf2oCC2Sti4mkGq1ntL8YJoqdCu8ZGCrfFail", "timestamp": "13-06-2020", "label": false, "result": "0x402b6ab609703Fdce0D01eD6738eD81A05D66777" };
@@ -207,24 +210,30 @@ export default class HomePage extends React.Component {
 
   }
 
-  onSubmit =async (event) => {
+  onSubmit = async (event) => {
     // console.log(this.state.contract);
-   // fs.readFile(filePath, async (error, fileData) => {
+    // fs.readFile(filePath, async (error, fileData) => {
     var today = new Date();
 
-      var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
-      const uploadedFile = await fleekStorage.upload({
-        apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
-        apiSecret: 'GMFzg7TFJC2fjhwoz9slkfnncmV/TAHK/4WVeI0qpYY=',
-        key: this.state.account+date,
-        data: this.state.buffer,
-      });
+    var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
+    const uploadedFile = await fleekStorage.upload({
+      apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
+      apiSecret: 'GMFzg7TFJC2fjhwoz9slkfnncmV/TAHK/4WVeI0qpYY=',
+      key: this.state.account + date,
+      data: this.state.buffer,
+    });
     //})
     console.log(uploadedFile);
-    const myFile = await fleekStorage.getFileFromHash({
-      hash: 'bafybeicxgtvq5uvppx5pttxgvqnzkme5ckyzi6yvo4dy7oq5pw5bctxs4e',
-    })
-    console.log(myFile);
+    if (uploadedFile) {
+      this.state.ipfscontract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, date).send({ from: this.state.account }).then((r) => {
+
+        this.loadBlockchainData();
+        // this.setState({})
+
+
+      })
+    }
+
     // ipfs.add(this.state.buffer, (error, result) => {
     //   var today = new Date();
 

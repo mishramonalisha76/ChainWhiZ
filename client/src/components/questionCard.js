@@ -113,9 +113,9 @@ export default class QuestionsCard extends React.Component {
               </Typography>
             </Grid>
             <Grid item xs={10} md={10}>
-              <Typography color="textSecondary" variant="h6" gutterBottom>
-                <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.props.data.question} target="_blank" >
-                  {this.props.data.question}  </a>
+              <Typography variant="subheading" color="inherit">
+               
+                  {this.props.data.question}  
               </Typography>
 
             </Grid>
