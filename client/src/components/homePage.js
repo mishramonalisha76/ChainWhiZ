@@ -94,11 +94,12 @@ export default class HomePage extends React.Component {
     }
     var questions = [];
     const len = await this.state.ipfscontract.methods.getQuestionListLength().call({ from: fromAcc });
-    var i;
+    var i; 
+
     this.setState({ questions: [] });
     var cont = [];
     console.log(len);
-    // var temp = {};
+    
     for (i = len - 1; i >= 0; i--) {
       console.log("line no 102")
       const ques = await this.state.ipfscontract.methods.getQuestionKey(i).call({ from: fromAcc });
