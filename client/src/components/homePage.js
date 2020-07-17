@@ -210,10 +210,13 @@ export default class HomePage extends React.Component {
   onSubmit =async (event) => {
     // console.log(this.state.contract);
    // fs.readFile(filePath, async (error, fileData) => {
+    var today = new Date();
+
+      var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
       const uploadedFile = await fleekStorage.upload({
         apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
         apiSecret: 'GMFzg7TFJC2fjhwoz9slkfnncmV/TAHK/4WVeI0qpYY=',
-        key: 'my-file-key2',
+        key: this.state.account+date,
         data: this.state.buffer,
       });
     //})
