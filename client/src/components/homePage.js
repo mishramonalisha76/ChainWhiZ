@@ -91,8 +91,10 @@ export default class HomePage extends React.Component {
           this.setState({ roleValue: "Solver" });
       }
     }
-    
-    var abc = this.state.finalobj;
+
+   const usplitQuestion = await this.state.rolescontract.methods.questions().call({ from: fromAcc });
+
+   var abc = this.state.finalobj;
     abc.cardofquestion = questions;
     abc.type = this.state.roleValue;
     this.setState({
