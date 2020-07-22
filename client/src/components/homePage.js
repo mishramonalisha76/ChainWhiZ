@@ -47,7 +47,7 @@ export default class HomePage extends React.Component {
     await this.loadWeb3()
     await this.loadBlockchainData()
   }
- 
+
 
   async loadWeb3() {
     if (window.ethereum) {
@@ -68,7 +68,7 @@ export default class HomePage extends React.Component {
 
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0], loader: true })
-    const ipfscontract = new web3.eth.Contract(ipfsABI, "0xa35ab86d2e8a609e8ee044eb6c47aef293e24596")
+    const ipfscontract = new web3.eth.Contract(ipfsABI, "0xb5304716b635e3b02e04d8cd90af5830171af269")
     this.setState({ ipfscontract })
     const rolescontract = new web3.eth.Contract(rolesABI, "0x5E16F0b5B4eeeb603967278B7ADFe63Fa0F54BAe")
     this.setState({ rolescontract })
@@ -89,14 +89,15 @@ export default class HomePage extends React.Component {
       }
     }
 
-   const usplitQuestion = await this.state.rolescontract.methods.questions().call({ from: fromAcc });
+    const unsplitQuestion = await this.state.rolescontract.methods.questions().call({ from: fromAcc });
+    this.setState({unsplitQuestion:unsplitQuestion});
 
-  
   }
   constructor(props) {
     super(props);
     this.state = {
       questions: [],
+      unsplitQuestion:[],
       rolescontract: null,
       ipfscontract: null,
       web3: null,
@@ -130,7 +131,8 @@ export default class HomePage extends React.Component {
   onSubmit = async (event) => {
 
     var today = new Date();
-
+    var timeStart=today.getTime();
+    var timeEnd=10;
     var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
     const uploadedFile = await fleekStorage.upload({
       apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
@@ -138,11 +140,10 @@ export default class HomePage extends React.Component {
       key: this.state.account + date,
       data: this.state.buffer,
     });
-    
+
     console.log(uploadedFile);
     if (uploadedFile) {
-      this.state.ipfscontract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, date).send({ from: this.state.account }).then((r) => {
-        var currKey=uploadedFile.hash;
+      this.state.ipfscontract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, timeStart,timeEnd,date).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
 
 
