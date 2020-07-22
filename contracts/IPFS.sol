@@ -20,6 +20,7 @@ contract IPFS {
          string resSolutionLink;
          string resSolutionLinkReadMe;
          bool label;
+         string split;
                   
          }
   
@@ -73,7 +74,8 @@ mapping(string => uint256) maxVotedIndex;
            resSolver:address(0),
            resSolutionLink:"",
            resSolutionLinkReadMe:"",
-           label:true
+           label:true,
+           split:"#"
 
 
            }));

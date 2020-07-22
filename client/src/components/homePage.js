@@ -91,76 +91,7 @@ export default class HomePage extends React.Component {
           this.setState({ roleValue: "Solver" });
       }
     }
-    var questions = [];
-    const len = await this.state.ipfscontract.methods.getQuestionListLength().call({ from: fromAcc });
-    var i;
-
-    this.setState({ questions: [] });
-    var cont = [];
-    console.log(len);
-
-    for (i = len - 1; i >= 0; i--) {
-      console.log("line no 102")
-      const ques = await this.state.ipfscontract.methods.getQuestionKey(i).call({ from: fromAcc });
-
-      const myFile = await fleekStorage.getFileFromHash({
-        hash: ques,
-      })
-      console.log(myFile);
-
-      const details = await this.state.ipfscontract.methods.displayQuestionDetails(ques).call({ from: fromAcc });
-      const seconds = new Date().getTime() / 1000;
-
-
-
-      var temp = {};
-
-      temp = { "address": details[0], "question": myFile, "timestamp": details[2], "label": true, "result": "" };
-
-      if (parseInt(details[1]) <= seconds) {
-
-        console.log("Line no 123");
-        if (details[3] == "0x0000000000000000000000000000000000000000") {
-          var j;
-          const sollinkslen = await this.state.ipfscontract.methods.getSolverSolutionLinks(ques).call({ from: fromAcc });
-          var max = 0;
-
-          var ressolver = "0x0000000000000000000000000000000000000000";
-          for (j = 0; j < sollinkslen; j++) {
-            const sol = await this.state.ipfscontract.methods.getSolutionLink(j, ques).call({ from: fromAcc });
-            const res = await this.state.ipfscontract.methods.getAccuracy(sol[0]).call({ from: fromAcc });
-            if (res > max) {
-              max = res;
-              ressolver = sol[1];
-            }
-          }
-
-
-          if (ressolver != "0x0000000000000000000000000000000000000000") {
-            this.state.ipfscontract.methods.setResult(ques, ressolver).send({ from: details[0] }).then((r) => {
-
-              this.loadBlockchainData();
-
-
-
-            })
-          }
-
-          temp.result = ressolver;
-          temp.label = false;
-        }
-        temp.result = details[3];
-        temp.label = false;
-
-
-      }
-
-      questions.push(temp);
-
-
-    }
-
-    this.setState({ questions: questions });
+    
     var abc = this.state.finalobj;
     abc.cardofquestion = questions;
     abc.type = this.state.roleValue;
