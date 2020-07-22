@@ -1,6 +1,5 @@
 import React from "react";
 import Web3 from "web3";
-import ipfs from "../js/ipfshttp";
 import fleekStorage from '@fleekhq/fleek-storage-js'
 import { ipfsABI } from "../js/IPFS";
 import { rolesABI } from "../js/roles";
@@ -36,7 +35,7 @@ const chainWiz = {
   backgroundImage: "url(" + chainWizImage + ")",
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'cover',
-  // backgroundColor: "black"
+
 }
 
 
@@ -95,10 +94,11 @@ export default class HomePage extends React.Component {
     var questions = [];
     const len = await this.state.ipfscontract.methods.getQuestionListLength().call({ from: fromAcc });
     var i;
+
     this.setState({ questions: [] });
     var cont = [];
     console.log(len);
-    // var temp = {};
+
     for (i = len - 1; i >= 0; i--) {
       console.log("line no 102")
       const ques = await this.state.ipfscontract.methods.getQuestionKey(i).call({ from: fromAcc });
@@ -159,8 +159,7 @@ export default class HomePage extends React.Component {
 
 
     }
-    // var temp = { "address": "0xdda59C23CfDe94b5d2577Df6BB6b801bfD381f3c", "question": "Qmc6horV2Yf2oCC2Sti4mkGq1ntL8YJoqdCu8ZGCrfFail", "timestamp": "13-06-2020", "label": false, "result": "0x402b6ab609703Fdce0D01eD6738eD81A05D66777" };
-    // questions.push(temp);
+
     this.setState({ questions: questions });
     var abc = this.state.finalobj;
     abc.cardofquestion = questions;
@@ -211,8 +210,7 @@ export default class HomePage extends React.Component {
   }
 
   onSubmit = async (event) => {
-    // console.log(this.state.contract);
-    // fs.readFile(filePath, async (error, fileData) => {
+
     var today = new Date();
 
     var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
@@ -222,39 +220,21 @@ export default class HomePage extends React.Component {
       key: this.state.account + date,
       data: this.state.buffer,
     });
-    //})
+
     console.log(uploadedFile);
     if (uploadedFile) {
       this.state.ipfscontract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, date).send({ from: this.state.account }).then((r) => {
 
         this.loadBlockchainData();
-        // this.setState({})
+
 
 
       })
     }
 
-    // ipfs.add(this.state.buffer, (error, result) => {
-    //   var today = new Date();
-
-    //   var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
-    //   this.state.ipfscontract.methods.publisherUploadQues(result[0].hash, this.state.postReward, date).send({ from: this.state.account }).then((r) => {
-
-    //     this.loadBlockchainData();
-    //     // this.setState({})
-
-
-    //   })
-    //   if (error)
-    //     console.log(error);
-
-
-    // })
-
 
   }
   render() {
-    // console.log(this.state);
 
     return (
       <div >
