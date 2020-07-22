@@ -47,10 +47,7 @@ export default class HomePage extends React.Component {
     await this.loadWeb3()
     await this.loadBlockchainData()
   }
-  async componentWillReceiveProps(prev, next) {
-    this.setState({});
-    await this.loadBlockchainData()
-  }
+ 
 
   async loadWeb3() {
     if (window.ethereum) {
@@ -91,89 +88,10 @@ export default class HomePage extends React.Component {
           this.setState({ roleValue: "Solver" });
       }
     }
-    var questions = [];
-    const len = await this.state.ipfscontract.methods.getQuestionListLength().call({ from: fromAcc });
-    var i;
 
-    this.setState({ questions: [] });
-    var cont = [];
-    console.log(len);
+   const usplitQuestion = await this.state.rolescontract.methods.questions().call({ from: fromAcc });
 
-    for (i = len - 1; i >= 0; i--) {
-      console.log("line no 102")
-      const ques = await this.state.ipfscontract.methods.getQuestionKey(i).call({ from: fromAcc });
-
-      const myFile = await fleekStorage.getFileFromHash({
-        hash: ques,
-      })
-      console.log(myFile);
-
-      const details = await this.state.ipfscontract.methods.displayQuestionDetails(ques).call({ from: fromAcc });
-      const seconds = new Date().getTime() / 1000;
-
-
-
-      var temp = {};
-
-      temp = { "address": details[0], "question": myFile, "timestamp": details[2], "label": true, "result": "" };
-
-      if (parseInt(details[1]) <= seconds) {
-
-        console.log("Line no 123");
-        if (details[3] == "0x0000000000000000000000000000000000000000") {
-          var j;
-          const sollinkslen = await this.state.ipfscontract.methods.getSolverSolutionLinks(ques).call({ from: fromAcc });
-          var max = 0;
-
-          var ressolver = "0x0000000000000000000000000000000000000000";
-          for (j = 0; j < sollinkslen; j++) {
-            const sol = await this.state.ipfscontract.methods.getSolutionLink(j, ques).call({ from: fromAcc });
-            const res = await this.state.ipfscontract.methods.getAccuracy(sol[0]).call({ from: fromAcc });
-            if (res > max) {
-              max = res;
-              ressolver = sol[1];
-            }
-          }
-
-
-          if (ressolver != "0x0000000000000000000000000000000000000000") {
-            this.state.ipfscontract.methods.setResult(ques, ressolver).send({ from: details[0] }).then((r) => {
-
-              this.loadBlockchainData();
-
-
-
-            })
-          }
-
-          temp.result = ressolver;
-          temp.label = false;
-        }
-        temp.result = details[3];
-        temp.label = false;
-
-
-      }
-
-      questions.push(temp);
-
-
-    }
-
-    this.setState({ questions: questions });
-    var abc = this.state.finalobj;
-    abc.cardofquestion = questions;
-    abc.type = this.state.roleValue;
-    this.setState({
-      finalobj: abc,
-      loader: false,
-      openSnackBar: true,
-      messageSnackBar: "Entries Found"
-    }, function () {
-      setTimeout(() => {
-        this.setState({ openSnackBar: false })
-      }, 3000)
-    });
+  
   }
   constructor(props) {
     super(props);
@@ -220,11 +138,11 @@ export default class HomePage extends React.Component {
       key: this.state.account + date,
       data: this.state.buffer,
     });
-
+    
     console.log(uploadedFile);
     if (uploadedFile) {
       this.state.ipfscontract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, date).send({ from: this.state.account }).then((r) => {
-
+        var currKey=uploadedFile.hash;
         this.loadBlockchainData();
 
 
@@ -323,7 +241,7 @@ export default class HomePage extends React.Component {
                 </CardContent >
               </Card >
             </Grid>
-            <Grid item xs={8} md={8}>
+            {/* <Grid item xs={8} md={8}>
               {this.state.questions.length > 0 && <span>
                 {this.state.questions.map(s => (
                   <div>
@@ -335,7 +253,7 @@ export default class HomePage extends React.Component {
                   </div>
 
                 ))}</span>}
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
         <Dialog
