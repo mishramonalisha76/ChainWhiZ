@@ -10,10 +10,10 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import HomePage from "./components/homePage";
-import MaticPage from "./components/rolesPage";
-import VoterPage from "./components/voterPage";
-import PublisherPage from "./components/publisherPage";
+// import HomePage from "./components/homePage";
+// import MaticPage from "./components/rolesPage";
+// import VoterPage from "./components/voterPage";
+// import PublisherPage from "./components/publisherPage";
 import Footer from "./components/footer";
 export default class App extends React.Component {
   render() {
