@@ -220,11 +220,11 @@ export default class HomePage extends React.Component {
       key: this.state.account + date,
       data: this.state.buffer,
     });
-
+    
     console.log(uploadedFile);
     if (uploadedFile) {
       this.state.ipfscontract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, date).send({ from: this.state.account }).then((r) => {
-
+        var currKey=uploadedFile.hash;
         this.loadBlockchainData();
 
 
