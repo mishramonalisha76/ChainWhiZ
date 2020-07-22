@@ -47,10 +47,7 @@ export default class HomePage extends React.Component {
     await this.loadWeb3()
     await this.loadBlockchainData()
   }
-  async componentWillReceiveProps(prev, next) {
-    this.setState({});
-    await this.loadBlockchainData()
-  }
+ 
 
   async loadWeb3() {
     if (window.ethereum) {
@@ -94,19 +91,7 @@ export default class HomePage extends React.Component {
 
    const usplitQuestion = await this.state.rolescontract.methods.questions().call({ from: fromAcc });
 
-   var abc = this.state.finalobj;
-    abc.cardofquestion = questions;
-    abc.type = this.state.roleValue;
-    this.setState({
-      finalobj: abc,
-      loader: false,
-      openSnackBar: true,
-      messageSnackBar: "Entries Found"
-    }, function () {
-      setTimeout(() => {
-        this.setState({ openSnackBar: false })
-      }, 3000)
-    });
+  
   }
   constructor(props) {
     super(props);
@@ -256,7 +241,7 @@ export default class HomePage extends React.Component {
                 </CardContent >
               </Card >
             </Grid>
-            <Grid item xs={8} md={8}>
+            {/* <Grid item xs={8} md={8}>
               {this.state.questions.length > 0 && <span>
                 {this.state.questions.map(s => (
                   <div>
@@ -268,7 +253,7 @@ export default class HomePage extends React.Component {
                   </div>
 
                 ))}</span>}
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
         <Dialog
