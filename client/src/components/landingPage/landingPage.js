@@ -28,8 +28,9 @@ const letteres = {
 }
 export default class LandingPage extends React.Component {
     componentDidMount() {
-        var strings = "abc,0xF1DC4557b975d046f0ab0f3741705e731bcc7d56,12,323,3244,23,0x0000000000000000000000000000000000000000,,,true,#,abc1,0xF1DC4557b975d046f0ab0f3741705e731bcc7d56,112,1323,311244,231,0x0000000000000000000000000000000000000000,,,true,#,xyz,0xF1DC4557b975d046f0ab0f3741705e731bcc7d56,1,100,10000,10,0x0000000000000000000000000000000000000000,,,true"
-        var arr=strings.split(",#,")
+        var strings = "0:tuple(string,address,uint256,uint256,uint256,string,address,string,string,bool,string)[]: ipfshash,0xcBC3A159604E17d975B0d20A79Ca9B62AaE1bb3d,23,123,1233,12-04-2020,0x0000000000000000000000000000000000000000,,,true,#"
+        var arr = strings.split(":")
+        var arr1 =arr[3]
         console.log(arr)
     }
     render() {
@@ -40,7 +41,7 @@ export default class LandingPage extends React.Component {
                     <Grid item xs={12} md={12} style={chainWiz}>
                         <br />   <br />  <br /> <br />  <br />  <br />   <br />  <br />
                         <Typography variant="h1" style={letteres}>
-                            {"ChainWiz"}
+                            {"ChainWhiZ"}
                         </Typography>
                         <Typography variant="h2" style={letteres}>
                             {"Ask | Answer | Approve"}
