@@ -7,7 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import { Link } from "react-router-dom";
-import transTok from "../js/transToken";
+// import transTok from "../js/transToken";
 
 import {
   Button,
@@ -47,7 +47,6 @@ export default class HomePage extends React.Component {
     await this.loadWeb3()
     await this.loadBlockchainData()
   }
- 
 
   async loadWeb3() {
     if (window.ethereum) {
@@ -67,7 +66,9 @@ export default class HomePage extends React.Component {
     const web3 = window.web3
 
     const accounts = await web3.eth.getAccounts()
-    this.setState({ account: accounts[0], loader: true })
+    this.setState({ account: accounts[0],
+      //  loader: true 
+      })
     const ipfscontract = new web3.eth.Contract(ipfsABI, "0xa35ab86d2e8a609e8ee044eb6c47aef293e24596")
     this.setState({ ipfscontract })
     const rolescontract = new web3.eth.Contract(rolesABI, "0x5E16F0b5B4eeeb603967278B7ADFe63Fa0F54BAe")
@@ -76,8 +77,9 @@ export default class HomePage extends React.Component {
     var account = await web3.eth.getAccounts()
     var fromAcc = account.toString();
     var role = await rolescontract.methods.verifyPublisher().call({ from: fromAcc });
-    if (role)
+    if (role) {
       this.setState({ roleValue: "Publisher" });
+    }
     else {
       role = await this.state.rolescontract.methods.verifyVoter().call({ from: fromAcc });
       if (role)
@@ -88,10 +90,9 @@ export default class HomePage extends React.Component {
           this.setState({ roleValue: "Solver" });
       }
     }
-
-   const usplitQuestion = await this.state.rolescontract.methods.questions().call({ from: fromAcc });
-
-  
+    const usplitQuestion = await this.state.rolescontract.methods.questions().call({ from: fromAcc });
+    console.log(usplitQuestion)
+    console.log("usplitQuestion")
   }
   constructor(props) {
     super(props);
@@ -138,11 +139,11 @@ export default class HomePage extends React.Component {
       key: this.state.account + date,
       data: this.state.buffer,
     });
-    
+
     console.log(uploadedFile);
     if (uploadedFile) {
       this.state.ipfscontract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, date).send({ from: this.state.account }).then((r) => {
-        var currKey=uploadedFile.hash;
+        var currKey = uploadedFile.hash;
         this.loadBlockchainData();
 
 
@@ -293,7 +294,7 @@ export default class HomePage extends React.Component {
               onClick={() => {
                 this.setState({ tranferDialog: false });
                 console.log(this.state.numberOfToken);
-                transTok(this.state.numberOfToken);
+                // transTok(this.state.numberOfToken);
                 this.loadBlockchainData()
 
               }}
@@ -305,9 +306,9 @@ export default class HomePage extends React.Component {
           </Button>
           </DialogActions>
         </Dialog>
-        {this.state.loader &&
+        {/* {this.state.loader &&
           <Loader />
-        }
+        } */}
         <SnackBar
           open={this.state.openSnackBar}
           message={this.state.messageSnackBar}
