@@ -65,7 +65,7 @@ export default class HomePage extends React.Component {
   async loadBlockchainData() {
 
     const web3 = window.web3
-
+    // this.setState({web3:web3});
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0], loader: true })
     const ipfscontract = new web3.eth.Contract(ipfsABI, "0xb5304716b635e3b02e04d8cd90af5830171af269")
@@ -86,11 +86,16 @@ export default class HomePage extends React.Component {
         role = await this.state.rolescontract.methods.verifySolver().call({ from: fromAcc });
         if (role)
           this.setState({ roleValue: "Solver" });
+        else{
+          this.setState({roleValue:"Guest"});
+        }
       }
     }
 
-    const unsplitQuestion = await this.state.rolescontract.methods.questions().call({ from: fromAcc });
+    const unsplitQuestion = await this.state.ipfscontract.methods.questions().call({ from: fromAcc });
+    console.log(unsplitQuestion)
     this.setState({unsplitQuestion:unsplitQuestion});
+    // this.setState({loader:false});
 
   }
   constructor(props) {
@@ -154,7 +159,7 @@ export default class HomePage extends React.Component {
 
   }
   render() {
-
+    console.log(this.state);
     return (
       <div >
         <Grid container>
@@ -306,9 +311,9 @@ export default class HomePage extends React.Component {
           </Button>
           </DialogActions>
         </Dialog>
-        {this.state.loader &&
-          <Loader />
-        }
+        {/* {this.state.loader &&
+          <Loader /> */}
+        {/* } */}
         <SnackBar
           open={this.state.openSnackBar}
           message={this.state.messageSnackBar}
