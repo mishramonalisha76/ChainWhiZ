@@ -59,8 +59,8 @@ export default class LandingPage extends React.Component {
                             Get started
                         </Button>
                     </Grid>
-                    <Grid item xs={12} md={12}>
-                        hello
+                    <Grid item xs={12} md={12 }>
+                      
                     </Grid>
                 </Grid>
             </div>
