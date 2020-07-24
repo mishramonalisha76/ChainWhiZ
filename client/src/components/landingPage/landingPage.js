@@ -6,7 +6,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import CircularProgress from '@material-ui/core/CircularProgress';
 // import chainWizImage from "../BG2.png";
-// import chainWizImage from "./pic.jpg";
+import chainWizImage from "./CWZalternative.png";
 import {
     Grid,
     CardContent,
@@ -15,7 +15,7 @@ import {
     Button,
 } from "@material-ui/core";
 const chainWiz = {
-    // backgroundImage: "url(" + chainWizImage + ")",
+    backgroundImage: "url(" + chainWizImage + ")",
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
     height: 650,
@@ -30,7 +30,7 @@ export default class LandingPage extends React.Component {
     componentDidMount() {
         var strings = "0:tuple(string,address,uint256,uint256,uint256,string,address,string,string,bool,string)[]: ipfshash,0xcBC3A159604E17d975B0d20A79Ca9B62AaE1bb3d,23,123,1233,12-04-2020,0x0000000000000000000000000000000000000000,,,true,#"
         var arr = strings.split(":")
-        var arr1 =arr[3]
+        var arr1 = arr[3]
         console.log(arr)
     }
     render() {
@@ -59,8 +59,8 @@ export default class LandingPage extends React.Component {
                             Get started
                         </Button>
                     </Grid>
-                    <Grid item xs={12} md={12 }>
-                      
+                    <Grid item xs={12} md={12}>
+
                     </Grid>
                 </Grid>
             </div>
