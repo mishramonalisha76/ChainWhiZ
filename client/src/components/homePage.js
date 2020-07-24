@@ -68,15 +68,16 @@ export default class HomePage extends React.Component {
     const accounts = await web3.eth.getAccounts()
     this.setState({
       account: accounts[0],
-      //  loader: true 
+      loader: true
     })
-    const ipfscontract = new web3.eth.Contract(ipfsABI, "0xa35ab86d2e8a609e8ee044eb6c47aef293e24596")
+    const ipfscontract = new web3.eth.Contract(ipfsABI, "0xb5304716b635e3b02e04d8cd90af5830171af269")
     this.setState({ ipfscontract })
     const rolescontract = new web3.eth.Contract(rolesABI, "0x5E16F0b5B4eeeb603967278B7ADFe63Fa0F54BAe")
     this.setState({ rolescontract })
 
     var account = await web3.eth.getAccounts()
     var fromAcc = account.toString();
+    console.log(fromAcc)
     var role = await rolescontract.methods.verifyPublisher().call({ from: fromAcc });
     if (role) {
       this.setState({ roleValue: "Publisher" });
@@ -97,7 +98,7 @@ export default class HomePage extends React.Component {
 
     const unsplitQuestion = await this.state.ipfscontract.methods.questions().call({ from: fromAcc });
     console.log(unsplitQuestion)
-    this.setState({ unsplitQuestion: unsplitQuestion });
+    this.setState({ unsplitQuestion: unsplitQuestion, loader: false });
     // this.setState({loader:false});
 
   }
@@ -120,7 +121,8 @@ export default class HomePage extends React.Component {
       openSnackBar: false,
       messageSnackBar: "",
       tranferDialog: false,
-      numberOfToken: ""
+      numberOfToken: "",
+      unsplitQuestion: []
 
     }
   }
@@ -250,19 +252,20 @@ export default class HomePage extends React.Component {
                 </CardContent >
               </Card >
             </Grid>
-            {/* <Grid item xs={8} md={8}>
-              {this.state.questions.length > 0 && <span>
-                {this.state.questions.map(s => (
-                  <div>
-                    <QuestionsCard
-                      data={s}
-                      type={this.state.roleValue}
-                    />
-                    <br />
-                  </div>
+            <Grid item xs={8} md={8}>
+              {this.state.unsplitQuestion.length > 0 &&
+                <span>
+                  {this.state.unsplitQuestion.map(s => (
+                    <div>
+                      <QuestionsCard
+                        data={s}
+                        type={this.state.roleValue}
+                      />
+                      <br />
+                    </div>
 
-                ))}</span>}
-            </Grid> */}
+                  ))}</span>}
+            </Grid>
           </Grid>
         </Grid>
         <Dialog
@@ -314,9 +317,9 @@ export default class HomePage extends React.Component {
           </Button>
           </DialogActions>
         </Dialog>
-        {/* {this.state.loader &&
-          <Loader /> */}
-        {/* } */}
+        {this.state.loader &&
+          <Loader />
+        }
         <SnackBar
           open={this.state.openSnackBar}
           message={this.state.messageSnackBar}

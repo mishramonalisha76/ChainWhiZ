@@ -97,25 +97,25 @@ export default class QuestionsCard extends React.Component {
 
 
   render() {
-    // console.log(this.props.data.questions);
+    // console.log(this.props.data);
     return (
       <Card raised={true} style={{ borderRadius: 10 }} >
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={10} md={10}>
               <Typography variant="title" color="inherit" >
-                {"Public Address:-" + this.props.data.address}
+                {"Public Address:-" + this.props.data.publisher}
               </Typography>
             </Grid>
             <Grid item xs={2} md={2}>
               <Typography variant="subheading" color="inherit" >
-                {"Date:-" + this.props.data.timestamp}
+                {"Date:-" + this.props.data.date}
               </Typography>
             </Grid>
             <Grid item xs={10} md={10}>
               <Typography variant="subheading" color="inherit">
                
-                  {this.props.data.question}  
+                  {this.props.data.ipfshash}  
               </Typography>
 
             </Grid>

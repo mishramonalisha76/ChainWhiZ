@@ -15,10 +15,10 @@ import {
     Button,
 } from "@material-ui/core";
 const chainWiz = {
-    backgroundImage: "url(" + chainWizImage + ")",
+    // backgroundImage: "url(" + chainWizImage + ")",
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
-    height: 650,
+    // height: 650,
     textAlign: "center"
     // marginTop:-100
 }
@@ -38,8 +38,19 @@ export default class LandingPage extends React.Component {
         return (
             <div style={{ backgroundColor: "#F9FAFA" }} >
                 <Grid container >
+                    <Grid item xs={12} md={2}>
+                        <div style={{ width: "80%", marginLeft: 30 }}>
+                            <img src={chainWizImage} style={{ width: "100%" }} />
+                        </div>
+                    </Grid>
+                    <Grid item xs={12} md={10} >
+                        <Button>
+                            hello
+                           </Button>
+                    </Grid>
+
                     <Grid item xs={12} md={12} style={chainWiz}>
-                        <br />   <br />  <br /> <br />  <br />  <br />   <br />  <br />
+                        <br />   <br />  <br /> <br />
                         <Typography variant="h1" style={letteres}>
                             {"ChainWhiZ"}
                         </Typography>
