@@ -19,41 +19,48 @@ import DialogContent from '@material-ui/core/DialogContent';
 
 import Divider from '@material-ui/core/Divider';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
+import fleekStorage from '@fleekhq/fleek-storage-js';
 
 export default class QuestionsCard extends React.Component {
 
 
   async componentWillMount() {
-    await this.loadWeb3()
-    await this.loadBlockchainData()
+    // await this.loadWeb3()
+    // await this.loadBlockchainData()
+    const myFile = await fleekStorage.getFileFromHash({
+      hash: this.props.data.ipfshash,
+    })
+    this.setState({
+      question: myFile
+    })
   }
 
-  async loadWeb3() {
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum)
-      await window.ethereum.enable()
-    }
-    else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider)
-    }
-    else {
-      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
-    }
-  }
+  // async loadWeb3() {
+  //   if (window.ethereum) {
+  //     window.web3 = new Web3(window.ethereum)
+  //     await window.ethereum.enable()
+  //   }
+  //   else if (window.web3) {
+  //     window.web3 = new Web3(window.web3.currentProvider)
+  //   }
+  //   else {
+  //     window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+  //   }
+  // }
 
-  async loadBlockchainData() {
+  // async loadBlockchainData() {
 
-    const web3 = window.web3
+  //   const web3 = window.web3
 
-    const accounts = await web3.eth.getAccounts()
-    this.setState({ account: accounts[0], loader: true })
-    const ipfscontract = new web3.eth.Contract(ipfsABI, "0xa35ab86d2e8a609e8ee044eb6c47aef293e24596")
-    this.setState({ ipfscontract })
+  //   const accounts = await web3.eth.getAccounts()
+  //   this.setState({ account: accounts[0], loader: true })
+  //   const ipfscontract = new web3.eth.Contract(ipfsABI, "0xa35ab86d2e8a609e8ee044eb6c47aef293e24596")
+  //   this.setState({ ipfscontract })
 
-    var account = await web3.eth.getAccounts()
-    var fromAcc = account.toString();
-  }
+  //   var account = await web3.eth.getAccounts()
+  //   var fromAcc = account.toString();
+  // }
   constructor(props) {
     super(props);
     this.state = {
@@ -61,7 +68,8 @@ export default class QuestionsCard extends React.Component {
       ethFiddleLink: "",
       ipfscontract: null,
       web3: null,
-      account: null
+      account: null,
+      question: ""
     }
   }
   captureFile = (event) => {
@@ -94,7 +102,9 @@ export default class QuestionsCard extends React.Component {
 
 
   }
+  async getQuestion() {
 
+  }
 
   render() {
     // console.log(this.props.data);
@@ -108,14 +118,13 @@ export default class QuestionsCard extends React.Component {
               </Typography>
             </Grid>
             <Grid item xs={2} md={2}>
-              <Typography variant="subheading" color="inherit" >
+              <Typography variant="subtitle1" color="inherit" >
                 {"Date:-" + this.props.data.date}
               </Typography>
             </Grid>
             <Grid item xs={10} md={10}>
-              <Typography variant="subheading" color="inherit">
-               
-                  {this.props.data.ipfshash}  
+              <Typography variant="subtitle1" color="inherit">
+                {this.state.question}
               </Typography>
 
             </Grid>

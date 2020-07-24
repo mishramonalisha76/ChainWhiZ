@@ -256,7 +256,7 @@ export default class HomePage extends React.Component {
               {this.state.unsplitQuestion.length > 0 &&
                 <span>
                   {this.state.unsplitQuestion.map(s => (
-                    <div>
+                    <div key={s}>
                       <QuestionsCard
                         data={s}
                         type={this.state.roleValue}
