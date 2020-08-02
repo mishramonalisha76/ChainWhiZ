@@ -193,13 +193,14 @@ export default class HomePage extends React.Component {
               <div style={{ float: "right" }}>
                 <Button style={btn}>Home</Button>
 
-                <Link to="/get_roles" style={{ textDecoration: "none" }}>
+                {/* <Link to="/get_roles" style={{ textDecoration: "none" }}> */}
                   <Button
                     style={btn}
+                    onClick={()=>{this.setState({rolesDialog:true})}}
                   >
                     Get Roles
                   </Button>
-                </Link>
+                {/* </Link> */}
                 <Button style={btn} onClick={() => {
                   this.setState({
                     tranferDialog: true
@@ -325,6 +326,49 @@ export default class HomePage extends React.Component {
             >
               Transfer Tokens
           </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          style={{ backgroundColor: "#5F5F5F" }}
+          open={this.state.rolesDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Please Select your role and Make Payment"}</DialogTitle>
+          <Grid container>
+            <DialogContent>
+              <Grid container item xs={12} md={12}>
+
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    value={this.state.roleValue}
+                    select
+                    label={"Select Role"}
+                    onChange={(e) => { this.setState({ roleValue: e.target.value }) }}
+                  >
+                    <MenuItem value="Publisher">{"Publisher"}</MenuItem>
+                    <MenuItem value="Voter">{"Voter"}</MenuItem>
+                    <MenuItem value="Solver">{"Solver"}</MenuItem>
+                  </TextField>
+                </Grid>
+              </Grid>
+            </DialogContent>
+          </Grid>
+          <DialogActions>
+
+            <Button
+              onClick={() => {
+                this.setState({ rolesDialog: false });
+                // this.getRoles();
+              }}
+              color="primary"
+              autoFocus
+              variant="outlined"
+            >
+              Submit
+      </Button>
           </DialogActions>
         </Dialog>
         {this.state.loader &&
