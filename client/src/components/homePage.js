@@ -214,45 +214,50 @@ export default class HomePage extends React.Component {
 
           </AppBar>
           <Grid container justify="center" spacing={2} item xs={12} md={12}>
-            <Grid item xs={8} md={8}>
-              <br />
-              <Card raised={true} style={{ borderRadius: 10 }} >
-                <CardContent>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={12}>
-                      <Typography variant="title" color="inherit" >
-                        {"Upload Your Question :-"}
-                        <input type="file" onChange={this.captureFile} />
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} md={12}>
+            {
+              this.state.roleValue === "Publisher" &&
 
-                      <TextField
-                        label="Upload Reward"
-                        variant="outlined"
-                        required
-                        type="number"
-                        value={this.state.postReward}
-                        onChange={(e) => { this.setState({ postReward: e.target.value }) }}
+              <Grid item xs={8} md={8}>
+                <br />
+                <Card raised={true} style={{ borderRadius: 10 }} >
+                  <CardContent>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12} md={12}>
+                        <Typography variant="title" color="inherit" >
+                          {"Upload Your Question :-"}
+                          <input type="file" onChange={this.captureFile} />
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} md={12}>
 
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={12} style={{ textAlign: "right" }}>
-                      {
-                        this.state.roleValue === "Publisher" &&
-                        <Button
-                          disabled={this.state.postReward === "" ? true : false}
-                          style={{ marginTop: -30 }} color="primary" variant="outlined" onClick={this.onSubmit} >
-                          Post
+                        <TextField
+                          label="Upload Reward"
+                          variant="outlined"
+                          required
+                          type="number"
+                          value={this.state.postReward}
+                          onChange={(e) => { this.setState({ postReward: e.target.value }) }}
+
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={12} style={{ textAlign: "right" }}>
+                        {
+                          this.state.roleValue === "Publisher" &&
+                          <Button
+                            disabled={this.state.postReward === "" ? true : false}
+                            style={{ marginTop: -30 }} color="primary" variant="outlined" onClick={this.onSubmit} >
+                            Post
                        </Button>
-                      }
+                        }
 
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </CardContent >
-              </Card >
-            </Grid>
+                  </CardContent >
+                </Card >
+              </Grid>
+            }
             <Grid item xs={8} md={8}>
+              <br/>
               {this.state.unsplitQuestion.length > 0 &&
                 <span>
                   {this.state.unsplitQuestion.map(s => (
