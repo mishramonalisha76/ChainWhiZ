@@ -120,38 +120,6 @@ export default class PublisherPage extends React.Component {
     return (
       <div>
         <Grid container justify="center" >
-          <AppBar style={chainWiz} position="static">
-            <Toolbar variant="dense">
-              <Link to="/" style={{ textDecoration: "none" }}>
-                <IconButton edge="start" color="inherit" aria-label="menu">
-                  <Icon style={{ color: "white" }}>
-                    view_headline
-             </Icon>
-                </IconButton>
-              </Link>
-
-              <Typography style={{ flex: 1 }} variant="h6" color="inherit">
-                ChainWhiZ
-          </Typography>
-              <div style={{ float: "right" }}>
-                <Button style={btn}>Home</Button>
-
-                <Link to="/get_roles" style={{ textDecoration: "none" }}>
-                  <Button
-                    style={btn}
-                  >
-                    Get Roles
-                  </Button>
-                </Link>
-
-                {/* <Button style={btn}>Profile</Button> */}
-                <Button style={btn}>GuideLines</Button>
-                <Button style={btn}>About</Button>
-                <Button style={btn}>Contact</Button>
-              </div>
-            </Toolbar>
-
-          </AppBar>
           <Card raised={true} style={{ borderRadius: 10, marginTop: 10 }} >
             <CardContent>
               <Grid container item spacing={2}>
@@ -307,15 +275,6 @@ export default class PublisherPage extends React.Component {
             </Dialog>
           </Card>
         </Grid>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <Footer />
       </div>
     )
   }

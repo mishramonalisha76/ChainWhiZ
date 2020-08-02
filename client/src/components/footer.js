@@ -76,7 +76,7 @@ export default class Footer extends React.Component {
             <ListItem style={{ paddingTop: 0 }}>
               <ListItemText
                 primary={
-                  <Typography style={{ color: "white" }} variant="title"  >
+                  <Typography style={{ color: "white" }} variant="body1"  >
                     {this.state.about}
                   </Typography>
                 }
@@ -94,7 +94,7 @@ export default class Footer extends React.Component {
               <ListItem style={{ paddingTop: 0 }}>
                 <ListItemText
                   primary={
-                    <Typography style={{ color: "white" }} variant="title"  >
+                    <Typography style={{ color: "white" }} variant="body1"  >
                       {"chainwhiz@gmail.com"}
                     </Typography>
                   }
@@ -103,7 +103,7 @@ export default class Footer extends React.Component {
               <ListItem style={{ paddingTop: 0 }}>
                 <ListItemText
                   primary={
-                    <Typography style={{ color: "white" }} variant="title"  >
+                    <Typography style={{ color: "white" }} variant="body1"  >
                       {"+91-9087654321"}
                     </Typography>
                   }
@@ -137,7 +137,7 @@ export default class Footer extends React.Component {
               <ListItem style={{ paddingTop: 0 }}>
                 <ListItemText
                   primary={
-                    <Typography style={{ color: "white" }} variant="title"  >
+                    <Typography style={{ color: "white" }} variant="body1"  >
                       {"Parabjeet Singh"}
                     </Typography>
                   }
@@ -146,7 +146,7 @@ export default class Footer extends React.Component {
               <ListItem style={{ paddingTop: 0 }}>
                 <ListItemText
                   primary={
-                    <Typography style={{ color: "white" }} variant="title"  >
+                    <Typography style={{ color: "white" }} variant="body1"  >
                       {"Ashis Kumar Pradhan"}
                     </Typography>
                   }
@@ -155,7 +155,7 @@ export default class Footer extends React.Component {
               <ListItem style={{ paddingTop: 0 }}>
                 <ListItemText
                   primary={
-                    <Typography style={{ color: "white" }} variant="title"  >
+                    <Typography style={{ color: "white" }} variant="body1"  >
                       {"Rajashree Parhi"}
                     </Typography>
                   }
@@ -164,7 +164,7 @@ export default class Footer extends React.Component {
               <ListItem style={{ paddingTop: 0 }}>
                 <ListItemText
                   primary={
-                    <Typography style={{ color: "white" }} variant="title"  >
+                    <Typography style={{ color: "white" }} variant="body1"  >
                       {"Monalisha Mishra"}
                     </Typography>
                   }
@@ -173,7 +173,7 @@ export default class Footer extends React.Component {
               <ListItem style={{ paddingTop: 0 }}>
                 <ListItemText
                   primary={
-                    <Typography style={{ color: "white" }} variant="title"  >
+                    <Typography style={{ color: "white" }} variant="body1"  >
                       {"Md Mohsin Siddiqui"}
                     </Typography>
                   }

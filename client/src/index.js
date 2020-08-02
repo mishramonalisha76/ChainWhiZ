@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
 // import Example from "./components/newFilw";
-import LandingPage from "./components/landingPage/landingPage";
+// import LandingPage from "./components/landingPage/landingPage";
+// import PostPublisher from "./components/postQuestion";
 ReactDOM.render(
   <React.StrictMode>
-    <LandingPage />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

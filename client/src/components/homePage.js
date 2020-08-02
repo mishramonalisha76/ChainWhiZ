@@ -29,6 +29,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Loader from "./loader";
 import SnackBar from "./snackbar";
 import Footer from "./footer";
+import PostPublisher from "./postQuestion";
 
 import chainWizImage from "./BG2.png";
 const chainWiz = {
@@ -79,6 +80,7 @@ export default class HomePage extends React.Component {
     var fromAcc = account.toString();
     console.log(fromAcc)
     var role = await rolescontract.methods.verifyPublisher().call({ from: fromAcc });
+    console.log(role)
     if (role) {
       this.setState({ roleValue: "Publisher" });
     }
@@ -215,13 +217,16 @@ export default class HomePage extends React.Component {
           </AppBar>
           <Grid container justify="center" spacing={2} item xs={12} md={12}>
             {
-              this.state.roleValue === "Publisher" &&
+              // this.state.roleValue === "Publisher"
+              true
+               &&
 
               <Grid item xs={8} md={8}>
                 <br />
-                <Card raised={true} style={{ borderRadius: 10 }} >
-                  <CardContent>
-                    <Grid container spacing={2}>
+                <Card raised={true} style={{ borderRadius: 10,height:300 }} >
+                  {/* <CardContent> */}
+                    <PostPublisher />
+                    {/* <Grid container spacing={2}>
                       <Grid item xs={12} md={12}>
                         <Typography variant="title" color="inherit" >
                           {"Upload Your Question :-"}
@@ -251,13 +256,13 @@ export default class HomePage extends React.Component {
                         }
 
                       </Grid>
-                    </Grid>
-                  </CardContent >
+                    </Grid> */}
+                  {/* </CardContent > */}
                 </Card >
               </Grid>
             }
             <Grid item xs={8} md={8}>
-              <br/>
+              <br />
               {this.state.unsplitQuestion.length > 0 &&
                 <span>
                   {this.state.unsplitQuestion.map(s => (
