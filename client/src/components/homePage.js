@@ -142,7 +142,7 @@ export default class HomePage extends React.Component {
     var today = new Date();
     var timeStart = today.getTime();
     // console.log(typeof(timeStart))
-    var timeEnd = 1000;
+    
     var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
     const uploadedFile = await fleekStorage.upload({
       apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
@@ -153,10 +153,9 @@ export default class HomePage extends React.Component {
 
     console.log(uploadedFile);
     if (uploadedFile) {
-      this.state.ipfscontract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, date, timeStart, timeEnd).send({ from: this.state.account }).then((r) => {
+      this.state.ipfscontract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, date, timeStart, 1000).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
-
-
+   
 
       })
     }
