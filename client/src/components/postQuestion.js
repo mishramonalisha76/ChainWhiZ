@@ -11,6 +11,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Web3 from "web3";
+import fleekStorage from '@fleekhq/fleek-storage-js'
+import { contractABI } from "../js/contract";
+
+import { dappABI } from "../js/Dapp";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -50,6 +55,44 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default class PostPublisher extends React.Component {
+  async componentDidMount() {
+    await this.loadWeb3()
+    await this.loadBlockchainData()
+  }
+
+  async loadWeb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+      await window.ethereum.enable()
+    }
+    else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider)
+    }
+    else {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+    }
+  }
+
+  async loadBlockchainData() {
+
+    const web3 = window.web3
+    // this.setState({web3:web3});
+    const accounts = await web3.eth.getAccounts()
+    this.setState({
+      account: accounts[0],
+      loader: true
+    })
+    const smartContract = new web3.eth.Contract(contractABI, "0xb5304716b635e3b02e04d8cd90af5830171af269")
+    this.setState({ smartContract })
+
+
+    var account = await web3.eth.getAccounts()
+    var fromAcc = account.toString();
+    console.log(fromAcc)
+
+
+
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -57,7 +100,78 @@ export default class PostPublisher extends React.Component {
       value: 0,
       postReward: "",
       noOfDays: "",
+      smartContract: null,
+      dappContract:null,
+      web3: null,
+      buffer: null,
+      account: null,
     }
+  }
+  captureFile = (event) => {
+    event.preventDefault()
+    const file = event.target.files[0]
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      this.setState({ buffer: Buffer(reader.result) })
+    }
+
+  }
+  onDappSubmit = async (event) => {
+
+    var today = new Date();
+    var timeStart = today.getTime();
+    // console.log(typeof(timeStart))
+
+    var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
+    const uploadedFile = await fleekStorage.upload({
+      apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
+      apiSecret: 'GMFzg7TFJC2fjhwoz9slkfnncmV/TAHK/4WVeI0qpYY=',
+      key: this.state.account + date,
+      data: this.state.buffer,
+    });
+
+    console.log(uploadedFile);
+    if (uploadedFile) {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract, date, timeStart, 1000).send({ from: this.state.account }).then((r) => {
+        this.loadBlockchainData();
+
+
+      })
+      this.state.dappContract.methods.publisherUploadDapp(uploadedFile.hash, this.state.postRewardDappSmartContractSecond, date, timeStart, 1000).send({ from: this.state.account }).then((r) => {
+        this.loadBlockchainData();
+    
+    
+      })
+    }
+
+
+  }
+  
+  onContractSubmit = async (event) => {
+
+    var today = new Date();
+    var timeStart = today.getTime();
+    // console.log(typeof(timeStart))
+
+    var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
+    const uploadedFile = await fleekStorage.upload({
+      apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
+      apiSecret: 'GMFzg7TFJC2fjhwoz9slkfnncmV/TAHK/4WVeI0qpYY=',
+      key: this.state.account + date,
+      data: this.state.buffer,
+    });
+
+    console.log(uploadedFile);
+    if (uploadedFile) {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract, date, timeStart, 1000).send({ from: this.state.account }).then((r) => {
+        this.loadBlockchainData();
+
+
+      })
+    }
+
+
   }
   handleChange = (event, newValue) => {
     this.setState({
@@ -94,7 +208,7 @@ export default class PostPublisher extends React.Component {
                   <Typography variant="body1" color="inherit" >
                     {"Upload Your Question :-"}
                     <input type="file"
-                    //  onChange={this.captureFile}
+                      onChange={this.captureFile}
                     />
                   </Typography>
                 </Grid>
@@ -154,8 +268,8 @@ export default class PostPublisher extends React.Component {
 
                   <Button
                     disabled={this.state.postReward === "" ? true : false}
-                  color="primary" variant="outlined"
-                  //  onClick={this.onSubmit}
+                    color="primary" variant="outlined"
+                    onClick={this.onDappSubmit}
                   >
                     Post
                        </Button>

@@ -1,5 +1,5 @@
 import React from "react";
-import { ipfsABI } from "../js/IPFS";
+import { contractABI } from "../js/contract";
 import ipfs from "../js/ipfshttp"
 import Web3 from "web3";
 import {
@@ -73,7 +73,7 @@ export default class PublisherPage extends React.Component {
     const web3 = window.web3
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0], loader: true })
-    const ipfscontract = new web3.eth.Contract(ipfsABI, "0xa35ab86d2e8a609e8ee044eb6c47aef293e24596")
+    const smartContract = new web3.eth.Contract(contractABI, "0xa35ab86d2e8a609e8ee044eb6c47aef293e24596")
     this.setState({ ipfscontract })
     var account = await web3.eth.getAccounts()
     var fromAcc = account.toString();

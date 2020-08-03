@@ -2,6 +2,7 @@ import React from "react";
 import regPublisherVerify from "../js/regPublisher"
 import regVoterVerify from "../js/regVoter"
 import regSolverVerify from "../js/regSolver"
+import regDapperVerify from "../js/regDapper"
 import Web3 from "web3";
 import {
   Button,
@@ -52,7 +53,7 @@ export default class MaticPage extends React.Component {
     this.setState({ account: accounts[0], loader: true })
 
 
-    const rolescontract = new web3.eth.Contract(rolesABI, "0x5E16F0b5B4eeeb603967278B7ADFe63Fa0F54BAe")
+    const rolescontract = new web3.eth.Contract(rolesABI, "0xa0c8870b4234a70da1892074179c50861c824b0e")
     this.setState({ rolescontract })
 
     var account = await web3.eth.getAccounts()
@@ -78,6 +79,15 @@ export default class MaticPage extends React.Component {
         {
           this.setState({ role: "Solver", loader: false });
           // window.location.reload();
+        }
+        else
+        {
+          role = await rolescontract.methods.verifyDapper().call({ from: fromAcc });
+          if (role)
+          {
+            this.setState({ role: "Dapper", loader: false });
+            // window.location.reload();
+          }
         }
       }
       this.setState({loader:false});
@@ -135,6 +145,12 @@ export default class MaticPage extends React.Component {
       }
 
     }
+    else if (this.state.roleValue === "Dapper"){
+      a = regDapperVerify();
+      if (a !== null) {
+        this.loadBlockchainData();
+      }
+    }
   }
 
 
@@ -171,6 +187,7 @@ export default class MaticPage extends React.Component {
                     <MenuItem value="Publisher">{"Publisher"}</MenuItem>
                     <MenuItem value="Voter">{"Voter"}</MenuItem>
                     <MenuItem value="Solver">{"Solver"}</MenuItem>
+                    <MenuItem value="Dapper">{"Dapper"}</MenuItem>
                   </TextField>
                 </Grid>
               </Grid>

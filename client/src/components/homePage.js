@@ -1,7 +1,7 @@
 import React from "react";
 import Web3 from "web3";
 import fleekStorage from '@fleekhq/fleek-storage-js'
-import { ipfsABI } from "../js/IPFS";
+import { contractABI } from "../js/contract";
 import { rolesABI } from "../js/roles";
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -71,9 +71,9 @@ export default class HomePage extends React.Component {
       account: accounts[0],
       loader: true
     })
-    const ipfscontract = new web3.eth.Contract(ipfsABI, "0xb5304716b635e3b02e04d8cd90af5830171af269")
-    this.setState({ ipfscontract })
-    const rolescontract = new web3.eth.Contract(rolesABI, "0x5E16F0b5B4eeeb603967278B7ADFe63Fa0F54BAe")
+    const smartContract = new web3.eth.Contract(contractABI, "0xb5304716b635e3b02e04d8cd90af5830171af269")
+    this.setState({ smartContract })
+    const rolescontract = new web3.eth.Contract(rolesABI, "0xa0c8870b4234a70da1892074179c50861c824b0e")
     this.setState({ rolescontract })
 
     var account = await web3.eth.getAccounts()
@@ -93,12 +93,21 @@ export default class HomePage extends React.Component {
         if (role)
           this.setState({ roleValue: "Solver" });
         else {
-          this.setState({ roleValue: "Guest" });
+          role = await rolescontract.methods.verifyDapper().call({ from: fromAcc });
+          if (role)
+          {
+            this.setState({ roleValue: "Dapper" });
+            // window.location.reload();
+          }
+          else
+          {
+            this.setState({ roleValue: "Guest" });
+          }
         }
       }
     }
 
-    const unsplitQuestion = await this.state.ipfscontract.methods.questions().call({ from: fromAcc });
+    const unsplitQuestion = await this.state.smartContract.methods.questions().call({ from: fromAcc });
     console.log(unsplitQuestion)
     this.setState({ unsplitQuestion: unsplitQuestion, loader: false });
     // this.setState({loader:false});
@@ -109,7 +118,7 @@ export default class HomePage extends React.Component {
     this.state = {
       questions: [],
       rolescontract: null,
-      ipfscontract: null,
+      smartContract: null,
       web3: null,
       paymentDialog: false,
       roleValue: "",

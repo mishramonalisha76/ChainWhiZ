@@ -1,5 +1,5 @@
 import React from "react";
-import { ipfsABI } from "../js/IPFS";
+import { contractABI } from "../js/contract";
 import ipfs from "../js/ipfshttp"
 import Web3 from "web3";
 import {

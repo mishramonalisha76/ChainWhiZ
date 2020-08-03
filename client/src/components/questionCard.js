@@ -1,5 +1,5 @@
 import React from "react";
-import { ipfsABI } from "../js/IPFS";
+import { contractABI } from "../js/contract";
 import ipfs from "../js/ipfshttp"
 import Web3 from "web3";
 import {
@@ -66,7 +66,7 @@ export default class QuestionsCard extends React.Component {
     this.state = {
       solveDialog: false,
       ethFiddleLink: "",
-      ipfscontract: null,
+      smartContract: null,
       web3: null,
       account: null,
       question: ""
@@ -88,7 +88,7 @@ export default class QuestionsCard extends React.Component {
       var today = new Date();
 
 
-      this.state.ipfscontract.methods.solverUploadSol(this.props.data.question, result[0].hash, this.state.ethFiddleLink).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.pushSolution(this.props.data.question, this.state.ethFiddleLink, result[0].hash,).send({ from: this.state.account }).then((r) => {
 
         // return window.location.reload();
         // this.setState({})

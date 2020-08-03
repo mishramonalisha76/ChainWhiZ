@@ -17,7 +17,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import { ipfsABI } from "../js/IPFS";
+import { contractABI } from "../js/contract";
 import Web3 from "web3";
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -61,18 +61,18 @@ export default class VoterPage extends React.Component {
 
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0], loader: true })
-    const ipfscontract = new web3.eth.Contract(ipfsABI, "0xa35ab86d2e8a609e8ee044eb6c47aef293e24596")
-    this.setState({ ipfscontract })
+    const smartContract = new web3.eth.Contract(contractABI, "0xa35ab86d2e8a609e8ee044eb6c47aef293e24596")
+    this.setState({ smartContract })
 
     var account = await web3.eth.getAccounts()
     var fromAcc = account.toString();
     var i = 0;
     var solutions = [];
     var temp = {};
-    const len = await this.state.ipfscontract.methods.getSolverSolutionLinks(this.props.location.state.data.question).call({ from: fromAcc });
+    const len = await this.state.smartContract.methods.getSolverSolutionLinks(this.props.location.state.data.question).call({ from: fromAcc });
     for (i = 0; i < len; i++) {
-      const sollink = await this.state.ipfscontract.methods.solutionLinkList(this.props.location.state.data.question, i).call({ from: fromAcc });
-      const readme = await this.state.ipfscontract.methods.solutionLinkDetails(sollink).call({ from: fromAcc });
+      const sollink = await this.state.smartContract.methods.solutionLinkList(this.props.location.state.data.question, i).call({ from: fromAcc });
+      const readme = await this.state.smartContract.methods.solutionLinkDetails(sollink).call({ from: fromAcc });
       temp = { "solverAddress": readme[0], "solutionLink": sollink, "readMe": readme[1] };
       solutions.push(temp);
     }
@@ -83,7 +83,7 @@ export default class VoterPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ipfscontract: null,
+      smartContract: null,
       web3: null,
       account: null,
       roleValue: "",
@@ -94,16 +94,16 @@ export default class VoterPage extends React.Component {
     }
   }
 
-  onAgree = (sol) => {
-    this.state.ipfscontract.methods.agree(sol).send({ from: this.state.account }).then((r) => {
+  onAgree = (sol,ques) => {
+    this.state.smartContract.methods.agree(sol,ques).send({ from: this.state.account }).then((r) => {
 
 
       // this.setState({})
 
     })
   }
-  onDisagree = (sol) => {
-    this.state.ipfscontract.methods.disagree(sol).send({ from: this.state.account }).then((r) => {
+  onDisagree = (sol,ques) => {
+    this.state.smartContract.methods.disagree(sol,ques).send({ from: this.state.account }).then((r) => {
 
 
       // this.setState({})
@@ -202,13 +202,13 @@ export default class VoterPage extends React.Component {
                         </Grid>
                         <Grid item xs={4} md={4} style={{ textAlign: "center" }}>
                           <IconButton
-                            onClick={() => { this.onAgree(s.solutionLink) }} >
+                            onClick={() => { this.onAgree(s.solutionLink,this.props.location.state.data.question) }} >
                             <Icon>
                               thumb_up_alt
                       </Icon>
                           </IconButton>
                           <IconButton
-                            onClick={() => { this.onDisagree(s.solutionLink) }} >
+                            onClick={() => { this.onDisagree(s.solutionLink,this.props.location.state.data.question) }} >
                             <Icon>
                               thumb_down_alt
                       </Icon>

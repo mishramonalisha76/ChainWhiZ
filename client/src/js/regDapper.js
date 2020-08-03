@@ -2,7 +2,7 @@ import Web3 from "web3";
 import { rolesABI } from "./roles";
 
 
-export default async function regVoterVerify() {
+export default async function regDapperVerify() {
 let output=null
  
  async function loadWeb3() {
@@ -36,7 +36,7 @@ const amt = window.web3.utils.toWei('0.5','ether')
  const contractAddress = "0xa0c8870b4234a70da1892074179c50861c824b0e";
  const contract = new window.web3.eth.Contract(rolesABI, contractAddress);
 
- async function regVoter()
+ async function regDapper()
  {
     let trnOutput=null;
     
@@ -60,16 +60,15 @@ const amt = window.web3.utils.toWei('0.5','ether')
 
         if  (trnOutput)
         {
-            await contract.methods.addVoter().send({ from: account[0] ,chainId: 3})
-            output = await contract.methods.verifyVoter().call({ from: account[0] ,chainId: 3});
+            await contract.methods.addDapper().send({ from: account[0] ,chainId: 3})
+            output = await contract.methods.verifyDapper().call({ from: account[0] ,chainId: 3});
             console.log(output)
         }
 
     }
 
  }
-await regVoter()
+await regDapper()
 
 return output
 }
-

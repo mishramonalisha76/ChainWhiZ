@@ -1,4 +1,4 @@
-export const ipfsABI =
+export const contractABI =
 	[
 		{
 			"inputs": [
