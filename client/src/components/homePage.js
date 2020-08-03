@@ -29,6 +29,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Loader from "./loader";
 import SnackBar from "./snackbar";
 import Footer from "./footer";
+import PostPublisher from "./postQuestion";
 
 import chainWizImage from "./BG2.png";
 const chainWiz = {
@@ -79,6 +80,7 @@ export default class HomePage extends React.Component {
     var fromAcc = account.toString();
     console.log(fromAcc)
     var role = await rolescontract.methods.verifyPublisher().call({ from: fromAcc });
+    console.log(role)
     if (role) {
       this.setState({ roleValue: "Publisher" });
     }
@@ -190,13 +192,14 @@ export default class HomePage extends React.Component {
               <div style={{ float: "right" }}>
                 <Button style={btn}>Home</Button>
 
-                <Link to="/get_roles" style={{ textDecoration: "none" }}>
+                {/* <Link to="/get_roles" style={{ textDecoration: "none" }}> */}
                   <Button
                     style={btn}
+                    onClick={()=>{this.setState({rolesDialog:true})}}
                   >
                     Get Roles
                   </Button>
-                </Link>
+                {/* </Link> */}
                 <Button style={btn} onClick={() => {
                   this.setState({
                     tranferDialog: true
@@ -213,45 +216,53 @@ export default class HomePage extends React.Component {
 
           </AppBar>
           <Grid container justify="center" spacing={2} item xs={12} md={12}>
+            {
+              // this.state.roleValue === "Publisher"
+              true
+               &&
+
+              <Grid item xs={8} md={8}>
+                <br />
+                <Card raised={true} style={{ borderRadius: 10,height:300 }} >
+                  {/* <CardContent> */}
+                    <PostPublisher />
+                    {/* <Grid container spacing={2}>
+                      <Grid item xs={12} md={12}>
+                        <Typography variant="title" color="inherit" >
+                          {"Upload Your Question :-"}
+                          <input type="file" onChange={this.captureFile} />
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} md={12}>
+
+                        <TextField
+                          label="Upload Reward"
+                          variant="outlined"
+                          required
+                          type="number"
+                          value={this.state.postReward}
+                          onChange={(e) => { this.setState({ postReward: e.target.value }) }}
+
+                        />
+                      </Grid>
+                      <Grid item xs={12} md={12} style={{ textAlign: "right" }}>
+                        {
+                          this.state.roleValue === "Publisher" &&
+                          <Button
+                            disabled={this.state.postReward === "" ? true : false}
+                            style={{ marginTop: -30 }} color="primary" variant="outlined" onClick={this.onSubmit} >
+                            Post
+                       </Button>
+                        }
+
+                      </Grid>
+                    </Grid> */}
+                  {/* </CardContent > */}
+                </Card >
+              </Grid>
+            }
             <Grid item xs={8} md={8}>
               <br />
-              <Card raised={true} style={{ borderRadius: 10 }} >
-                <CardContent>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={12}>
-                      <Typography variant="title" color="inherit" >
-                        {"Upload Your Question :-"}
-                        <input type="file" onChange={this.captureFile} />
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12} md={12}>
-
-                      <TextField
-                        label="Upload Reward"
-                        variant="outlined"
-                        required
-                        type="number"
-                        value={this.state.postReward}
-                        onChange={(e) => { this.setState({ postReward: e.target.value }) }}
-
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={12} style={{ textAlign: "right" }}>
-                      {
-                        this.state.roleValue === "Publisher" &&
-                        <Button
-                          disabled={this.state.postReward === "" ? true : false}
-                          style={{ marginTop: -30 }} color="primary" variant="outlined" onClick={this.onSubmit} >
-                          Post
-                       </Button>
-                      }
-
-                    </Grid>
-                  </Grid>
-                </CardContent >
-              </Card >
-            </Grid>
-            <Grid item xs={8} md={8}>
               {this.state.unsplitQuestion.length > 0 &&
                 <span>
                   {this.state.unsplitQuestion.map(s => (
@@ -314,6 +325,49 @@ export default class HomePage extends React.Component {
             >
               Transfer Tokens
           </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          style={{ backgroundColor: "#5F5F5F" }}
+          open={this.state.rolesDialog}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Please Select your role and Make Payment"}</DialogTitle>
+          <Grid container>
+            <DialogContent>
+              <Grid container item xs={12} md={12}>
+
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    value={this.state.roleValue}
+                    select
+                    label={"Select Role"}
+                    onChange={(e) => { this.setState({ roleValue: e.target.value }) }}
+                  >
+                    <MenuItem value="Publisher">{"Publisher"}</MenuItem>
+                    <MenuItem value="Voter">{"Voter"}</MenuItem>
+                    <MenuItem value="Solver">{"Solver"}</MenuItem>
+                  </TextField>
+                </Grid>
+              </Grid>
+            </DialogContent>
+          </Grid>
+          <DialogActions>
+
+            <Button
+              onClick={() => {
+                this.setState({ rolesDialog: false });
+                // this.getRoles();
+              }}
+              color="primary"
+              autoFocus
+              variant="outlined"
+            >
+              Submit
+      </Button>
           </DialogActions>
         </Dialog>
         {this.state.loader &&

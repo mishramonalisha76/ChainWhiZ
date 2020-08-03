@@ -5,10 +5,7 @@ pragma solidity >=0.4.22 <0.7.0;
 pragma experimental ABIEncoderV2;
 contract IPFS {
    
-    
-    struct Publisher{
-          string[] ipfsQuestion;
-       }
+   
    struct quesContractDetails{
          string ipfshash;
          address publisher;
@@ -20,8 +17,7 @@ contract IPFS {
          string resSolutionLink;
          string resSolutionLinkReadMe;
          bool label;
-         string split;
-                  
+        
          }
   
 
@@ -42,17 +38,10 @@ contract IPFS {
             }
 
 
-    struct Solver{
-
-            address solver;
-            string[] solutionLink;
-            string[] readMeIPFS;
-            
-      
-        }
 
 quesContractDetails[] quesContract;
-
+mapping(address=> quesContractDetails[]) publisherContractProfile;
+mapping(string =>uint256) contractDetailsIndex;
 mapping(string => quesIPFS) quesSolDetails;
 mapping(string => solLink)solutionList;
 mapping(string => mapping(address => bool)) voted;
@@ -63,7 +52,8 @@ mapping(string => uint256) maxVotedIndex;
 
  function publisherUploadQues(string memory questionIpfs,uint256 quesReward,string memory dateTime,uint256 start,uint256 end) public{
               
-              
+         contractDetailsIndex[questionIpfs]=quesContract.length;
+         
          quesContract.push(quesContractDetails({
            ipfshash:questionIpfs,
            publisher:msg.sender,
@@ -74,11 +64,13 @@ mapping(string => uint256) maxVotedIndex;
            resSolver:address(0),
            resSolutionLink:"",
            resSolutionLinkReadMe:"",
-           label:true,
-           split:"#"
+           label:true
+           
 
 
            }));
+         publisherContractProfile[msg.sender].push(quesContract[contractDetailsIndex[questionIpfs]]);
+          
   
                 
 
@@ -167,6 +159,39 @@ function pushSolution(string memory quesHash,string memory sol,string memory rea
  function maxVotedSol(string memory quesHash)public view returns (address, string memory, string memory, uint256){
          
         return(quesSolDetails[quesHash].solver[maxVotedIndex[quesHash]],quesSolDetails[quesHash].solutionLink[maxVotedIndex[quesHash]],quesSolDetails[quesHash].readMe[maxVotedIndex[quesHash]],quesSolDetails[quesHash].votePercent[maxVotedIndex[quesHash]]);
+
+}
+
+
+//set result
+
+  function setResult(string memory quesHash,address solver,string memory solutionLink,string memory readMe) public 
+    {
+       
+       
+       uint256 pos=contractDetailsIndex[quesHash];
+       quesContract[pos].label=false;
+       quesContract[pos].resSolver=solver;
+       quesContract[pos].resSolutionLink=solutionLink;
+       quesContract[pos].resSolutionLinkReadMe=readMe;
+    //   publisherContractProfile[pub].label=false;
+    //   publisherContractProfile[pub].resSolver=solver;
+    //   publisherContractProfile[pub].resSolutionLink=solutionLink;
+    //   publisherContractProfile[pub].resSolutionLinkReadMe=readMe;
+       
+       
+        
+    }
+
+//publisher profile for smart contract display
+
+function publisherProfile() public view returns(quesContractDetails[] memory){
+return publisherContractProfile[msg.sender];
+
+}
+    
+function publisherContractSol(string memory quesHash) public view returns(quesIPFS memory){
+return quesSolDetails[quesHash];
 
 }
 
