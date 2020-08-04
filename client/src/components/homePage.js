@@ -122,7 +122,7 @@ export default class HomePage extends React.Component {
     this.setState(
       {
         openSnackBar: true,
-        messageSnackBar: "Confirm transaction and change to ropsten"
+        messageSnackBar: "Confirm transaction"
       }
     );
     if (this.state.roleValue === "Publisher") {
