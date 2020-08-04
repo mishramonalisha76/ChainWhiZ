@@ -71,7 +71,7 @@ export default class HomePage extends React.Component {
       account: accounts[0],
       loader: true
     })
-    const smartContract = new web3.eth.Contract(contractABI, "0xb5304716b635e3b02e04d8cd90af5830171af269")
+    const smartContract = new web3.eth.Contract(contractABI, "0xbbfe5fb0e14cef295789dff039d29c90d4ed7b76")
     this.setState({ smartContract })
     const rolescontract = new web3.eth.Contract(rolesABI, "0xa0c8870b4234a70da1892074179c50861c824b0e")
     this.setState({ rolescontract })

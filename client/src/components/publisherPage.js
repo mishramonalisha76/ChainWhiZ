@@ -73,22 +73,11 @@ export default class PublisherPage extends React.Component {
     const web3 = window.web3
     const accounts = await web3.eth.getAccounts()
     this.setState({ account: accounts[0], loader: true })
-    const smartContract = new web3.eth.Contract(contractABI, "0xa35ab86d2e8a609e8ee044eb6c47aef293e24596")
+    const smartContract = new web3.eth.Contract(contractABI, "0xbbfe5fb0e14cef295789dff039d29c90d4ed7b76")
     this.setState({ ipfscontract })
     var account = await web3.eth.getAccounts()
     var fromAcc = account.toString();
-    var questions = [];
-    const len = await this.state.ipfscontract.methods.getIpfsQuestionLen().call({ from: fromAcc });
-    var i;
-    var cont = [];
-    for (i = len - 1; i >= 0; i--) {
-      const details = await this.state.ipfscontract.methods.publisherProfile(i).call({ from: fromAcc });
-      var temp = {};
-
-      temp = { "question": details[0], "reward": details[1], "timestamp": details[2] }
-      questions.push(temp);
-    }
-    this.setState({ questions: questions });
+    
 
   }
 
@@ -100,22 +89,7 @@ export default class PublisherPage extends React.Component {
     }
   }
 
-  async viewSol(ques) {
-    var solutions = [];
-    const len = await this.state.ipfscontract.methods.getSoutionLinkLen(ques).call({ from: this.state.account });
-    var i;
-    for (i = 0; i < len; i++) {
-      const details = await this.state.ipfscontract.methods.solutionLinkList(ques, i).call({ from: this.state.account });
-      const details1 = await this.state.ipfscontract.methods.solutionLinkDetails(details).call({ from: this.state.account });
-      const res = await this.state.ipfscontract.methods.getAccuracy(details).call({ from: this.state.account });
-      var temp = {};
-      temp = { "solver": details1[0], "solutionLink": details, "readme": details1[1], "vote": res }
-
-      solutions.push(temp);
-    }
-    this.setState({ solutions: solutions });
-    console.log(this.state.solutions);
-  }
+  
   render() {
     return (
       <div>
@@ -200,7 +174,7 @@ export default class PublisherPage extends React.Component {
                             <Button color="primary" variant="outlined" size="small"
                               onClick={() => {
                                 this.setState({ viewDialog: true });
-                                this.viewSol(row.question);
+                                // this.viewSol(row.question);
                               }}
                             >View</Button>
                           </TableCell>

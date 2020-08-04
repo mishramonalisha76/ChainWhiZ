@@ -15,7 +15,7 @@ import Web3 from "web3";
 import fleekStorage from '@fleekhq/fleek-storage-js'
 import { contractABI } from "../js/contract";
 
-import { dappABI } from "../js/Dapp";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -82,7 +82,7 @@ export default class PostPublisher extends React.Component {
       account: accounts[0],
       loader: true
     })
-    const smartContract = new web3.eth.Contract(contractABI, "0xb5304716b635e3b02e04d8cd90af5830171af269")
+    const smartContract = new web3.eth.Contract(contractABI, "0xbbfe5fb0e14cef295789dff039d29c90d4ed7b76")
     this.setState({ smartContract })
 
 
@@ -117,6 +117,7 @@ export default class PostPublisher extends React.Component {
     }
 
   }
+  
   onDappSubmit = async (event) => {
 
     var today = new Date();
@@ -133,16 +134,12 @@ export default class PostPublisher extends React.Component {
 
     console.log(uploadedFile);
     if (uploadedFile) {
-      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract, date, timeStart, 1000,"Dapp",2000).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract,this.state.postRewardDappSmartContractSecond, date, timeStart, 1000,"Dapp",2000).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
 
 
       })
-      this.state.dappContract.methods.publisherUploadDapp(uploadedFile.hash, this.state.postRewardDappSmartContractSecond, date, timeStart, 1000).send({ from: this.state.account }).then((r) => {
-        this.loadBlockchainData();
-    
-    
-      })
+      
 
 
     }
@@ -166,7 +163,7 @@ export default class PostPublisher extends React.Component {
 
     console.log(uploadedFile);
     if (uploadedFile) {
-      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract, date, timeStart, 1000,"smart contract",0).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract,0, date, timeStart, 1000,"smart contract",0).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
 
 
