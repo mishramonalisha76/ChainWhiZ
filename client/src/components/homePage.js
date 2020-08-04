@@ -137,42 +137,8 @@ export default class HomePage extends React.Component {
 
     }
   }
-  captureFile = (event) => {
-    event.preventDefault()
-    const file = event.target.files[0]
-    const reader = new window.FileReader()
-    reader.readAsArrayBuffer(file)
-    reader.onloadend = () => {
-      this.setState({ buffer: Buffer(reader.result) })
-    }
-
-  }
-
-  onSubmit = async (event) => {
-
-    var today = new Date();
-    var timeStart = today.getTime();
-    // console.log(typeof(timeStart))
-    
-    var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
-    const uploadedFile = await fleekStorage.upload({
-      apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
-      apiSecret: 'GMFzg7TFJC2fjhwoz9slkfnncmV/TAHK/4WVeI0qpYY=',
-      key: this.state.account + date,
-      data: this.state.buffer,
-    });
-
-    console.log(uploadedFile);
-    if (uploadedFile) {
-      this.state.ipfscontract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, date, timeStart, 1000).send({ from: this.state.account }).then((r) => {
-        this.loadBlockchainData();
-   
-
-      })
-    }
-
-
-  }
+  
+  
   render() {
     console.log(this.state);
     return (
@@ -208,15 +174,7 @@ export default class HomePage extends React.Component {
                   >
                     Get Roles
                   </Button>
-                {/* </Link> */}
-                <Button style={btn} onClick={() => {
-                  this.setState({
-                    tranferDialog: true
-                  })
-                }}>
-                  Transfer To Matic
-                  </Button>
-                {/* <Button style={btn}>Profile</Button> */}
+                
                 <Button style={btn}>GuideLines</Button>
                 <Button style={btn}>About</Button>
                 <Button style={btn}>Contact</Button>
@@ -287,55 +245,6 @@ export default class HomePage extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        <Dialog
-          open={this.state.tranferDialog}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">{"Please enter number of tokens you want to transfer(in wei)"}</DialogTitle>
-          <Grid container>
-            <DialogContent>
-              <Grid container item xs={12} md={12}>
-
-                <Grid item xs={12} md={12}>
-                  <TextField
-                    fullWidth
-                    variant="outlined"
-                    type="number"
-                    value={this.state.numberOfToken}
-                    label={"Number of Tokens"}
-                    onChange={(e) => { this.setState({ numberOfToken: e.target.value }) }}
-                  />
-                </Grid>
-              </Grid>
-            </DialogContent>
-          </Grid>
-          <DialogActions>
-            <Button
-              onClick={() => {
-                this.setState({ tranferDialog: false });
-              }}
-              color="primary"
-              variant="outlined"
-            >
-              Close
-          </Button>
-            <Button
-              onClick={() => {
-                this.setState({ tranferDialog: false });
-                console.log(this.state.numberOfToken);
-                // transTok(this.state.numberOfToken);
-                this.loadBlockchainData()
-
-              }}
-              color="primary"
-              autoFocus
-              variant="outlined"
-            >
-              Transfer Tokens
-          </Button>
-          </DialogActions>
-        </Dialog>
         <Dialog
           style={{ backgroundColor: "#5F5F5F" }}
           open={this.state.rolesDialog}
