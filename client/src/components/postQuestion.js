@@ -133,8 +133,10 @@ export default class PostPublisher extends React.Component {
     });
 
     console.log(uploadedFile);
+    console.log(this.state.postRewardDappSmartContract);
+    console.log(this.state.postRewardDappSmartContractSecond);
     if (uploadedFile) {
-      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract,this.state.postRewardDappSmartContractSecond, date, timeStart, 1000,"Dapp",2000).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract,this.state.postRewardDappSmartContractSecond, date, timeStart, 1000,JSON.stringify("Dapp"),2000).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
 
 
@@ -220,7 +222,7 @@ export default class PostPublisher extends React.Component {
                     fullWidth
                     type="number"
                     value={this.state.postRewardDappSmartContract}
-                    onChange={(e) => { this.setState({ postReward: e.target.value }) }}
+                    onChange={(e) => { this.setState({postRewardDappSmartContract: e.target.value }) }}
 
                   />
                 </Grid>
@@ -266,7 +268,7 @@ export default class PostPublisher extends React.Component {
                 <Grid item xs={12} md={12} style={{ textAlign: "right" }}>
 
                   <Button
-                    disabled={this.state.postReward === "" ? true : false}
+                   // disabled={this.state.postReward === "" ? true : false}
                     color="primary" variant="outlined"
                     onClick={this.onDappSubmit}
                   >

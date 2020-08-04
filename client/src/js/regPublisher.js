@@ -32,7 +32,7 @@ let output=null
 
  loadWeb3();
 
-const amt = window.web3.utils.toWei('0.5','ether')
+const amt = window.web3.utils.toWei('0.005','ether')
  const contractAddress = "0xa0c8870b4234a70da1892074179c50861c824b0e";
  const contract = new window.web3.eth.Contract(rolesABI, contractAddress);
 
