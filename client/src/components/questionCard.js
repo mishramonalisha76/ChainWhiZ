@@ -128,7 +128,7 @@ export default class QuestionsCard extends React.Component {
               </Typography>
 
             </Grid>
-            {!this.props.data.label &&
+            {!this.props.data.contractLabel &&
               <Grid item xs={12} md={12}>
                 <Typography variant="title" color="inherit">
                   {"Result :-" + this.props.data.result}
