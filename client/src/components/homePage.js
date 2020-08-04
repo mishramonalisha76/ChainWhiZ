@@ -1,5 +1,9 @@
 import React from "react";
 import Web3 from "web3";
+import regPublisherVerify from "../js/regPublisher"
+import regVoterVerify from "../js/regVoter"
+import regSolverVerify from "../js/regSolver"
+import regDapperVerify from "../js/regDapper"
 import fleekStorage from '@fleekhq/fleek-storage-js'
 import { contractABI } from "../js/contract";
 import { rolesABI } from "../js/roles";
@@ -113,6 +117,45 @@ export default class HomePage extends React.Component {
     // this.setState({loader:false});
 
   }
+  getRoles = () => {
+    var a = null;
+    this.setState(
+      {
+        openSnackBar: true,
+        messageSnackBar: "Confirm transaction and change to ropsten"
+      }
+    );
+    if (this.state.roleValue === "Publisher") {
+      a = regPublisherVerify();
+      if (a !== null) {
+        this.loadBlockchainData();
+      }
+
+
+    }
+
+    else if (this.state.roleValue === "Voter") {
+      a = regVoterVerify();
+      if (a !== null) {
+        this.loadBlockchainData();
+      }
+    }
+    else if (this.state.roleValue === "Solver") {
+      a = regSolverVerify();
+      if (a !== null) {
+        this.loadBlockchainData();
+      }
+
+    }
+    else if (this.state.roleValue === "Dapper"){
+      a = regDapperVerify();
+      if (a !== null) {
+        this.loadBlockchainData();
+      }
+    }
+  }
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -268,6 +311,7 @@ export default class HomePage extends React.Component {
                     <MenuItem value="Publisher">{"Publisher"}</MenuItem>
                     <MenuItem value="Voter">{"Voter"}</MenuItem>
                     <MenuItem value="Solver">{"Solver"}</MenuItem>
+                    <MenuItem value="Dapper">{"Dapper"}</MenuItem>
                   </TextField>
                 </Grid>
               </Grid>
@@ -278,7 +322,7 @@ export default class HomePage extends React.Component {
             <Button
               onClick={() => {
                 this.setState({ rolesDialog: false });
-                // this.getRoles();
+                this.getRoles();
               }}
               color="primary"
               autoFocus
