@@ -124,7 +124,7 @@ export default class HomePage extends React.Component {
         messageSnackBar: "Confirm transaction"
       }
     );
-    if (this.state.roleValue === "Publisher") {
+    if (this.state.role === "Publisher") {
       a = regPublisherVerify();
       if (a !== null) {
         this.loadBlockchainData();
@@ -133,13 +133,13 @@ export default class HomePage extends React.Component {
 
     }
 
-    else if (this.state.roleValue === "Voter") {
+    else if (this.state.role === "Voter") {
       a = regVoterVerify();
       if (a !== null) {
         this.loadBlockchainData();
       }
     }
-    else if (this.state.roleValue === "Solver") {
+    else if (this.state.role === "Solver") {
       a = regSolverVerify();
       if (a !== null) {
         this.loadBlockchainData();
