@@ -34,8 +34,9 @@ import Loader from "./loader";
 import SnackBar from "./snackbar";
 import Footer from "./footer";
 import PostPublisher from "./postQuestion";
-
+import { Redirect } from "react-router-dom";
 import chainWizImage from "./BG2.png";
+import PublisherPage from "./publisherPage";
 const chainWiz = {
   backgroundImage: "url(" + chainWizImage + ")",
   backgroundRepeat: 'no-repeat',
@@ -98,13 +99,11 @@ export default class HomePage extends React.Component {
           this.setState({ roleValue: "Solver" });
         else {
           role = await rolescontract.methods.verifyDapper().call({ from: fromAcc });
-          if (role)
-          {
+          if (role) {
             this.setState({ roleValue: "Dapper" });
             // window.location.reload();
           }
-          else
-          {
+          else {
             this.setState({ roleValue: "Guest" });
           }
         }
@@ -147,7 +146,7 @@ export default class HomePage extends React.Component {
       }
 
     }
-    else if (this.state.roleValue === "Dapper"){
+    else if (this.state.roleValue === "Dapper") {
       a = regDapperVerify();
       if (a !== null) {
         this.loadBlockchainData();
@@ -180,10 +179,13 @@ export default class HomePage extends React.Component {
 
     }
   }
-  
-  
+
+
   render() {
     console.log(this.state);
+    if (this.state.roleValue === "Publisher") {
+      return <Redirect to="publisher_section" />;
+    }
     return (
       <div >
         <Grid container>
@@ -211,13 +213,13 @@ export default class HomePage extends React.Component {
                 <Button style={btn}>Home</Button>
 
                 {/* <Link to="/get_roles" style={{ textDecoration: "none" }}> */}
-                  <Button
-                    style={btn}
-                    onClick={()=>{this.setState({rolesDialog:true})}}
-                  >
-                    Get Roles
+                <Button
+                  style={btn}
+                  onClick={() => { this.setState({ rolesDialog: true }) }}
+                >
+                  Get Roles
                   </Button>
-                
+
                 <Button style={btn}>GuideLines</Button>
                 <Button style={btn}>About</Button>
                 <Button style={btn}>Contact</Button>
@@ -226,7 +228,7 @@ export default class HomePage extends React.Component {
 
           </AppBar>
           <Grid container justify="center" spacing={2} item xs={12} md={12}>
-            {
+            {/* {
               // this.state.roleValue === "Publisher"
               true
                &&
@@ -234,43 +236,9 @@ export default class HomePage extends React.Component {
               <Grid item xs={8} md={8}>
                 <br />
                 <Card raised={true} style={{ borderRadius: 10,height:300 }} >
-                  {/* <CardContent> */}
-                    <PostPublisher />
-                    {/* <Grid container spacing={2}>
-                      <Grid item xs={12} md={12}>
-                        <Typography variant="title" color="inherit" >
-                          {"Upload Your Question :-"}
-                          <input type="file" onChange={this.captureFile} />
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12} md={12}>
-
-                        <TextField
-                          label="Upload Reward"
-                          variant="outlined"
-                          required
-                          type="number"
-                          value={this.state.postReward}
-                          onChange={(e) => { this.setState({ postReward: e.target.value }) }}
-
-                        />
-                      </Grid>
-                      <Grid item xs={12} md={12} style={{ textAlign: "right" }}>
-                        {
-                          this.state.roleValue === "Publisher" &&
-                          <Button
-                            disabled={this.state.postReward === "" ? true : false}
-                            style={{ marginTop: -30 }} color="primary" variant="outlined" onClick={this.onSubmit} >
-                            Post
-                       </Button>
-                        }
-
-                      </Grid>
-                    </Grid> */}
-                  {/* </CardContent > */}
                 </Card >
               </Grid>
-            }
+            } */}
             <Grid item xs={8} md={8}>
               <br />
               {this.state.unsplitQuestion.length > 0 &&
@@ -303,10 +271,10 @@ export default class HomePage extends React.Component {
                   <TextField
                     fullWidth
                     variant="outlined"
-                    value={this.state.roleValue}
+                    value={this.state.role}
                     select
                     label={"Select Role"}
-                    onChange={(e) => { this.setState({ roleValue: e.target.value }) }}
+                    onChange={(e) => { this.setState({ role: e.target.value }) }}
                   >
                     <MenuItem value="Publisher">{"Publisher"}</MenuItem>
                     <MenuItem value="Voter">{"Voter"}</MenuItem>
