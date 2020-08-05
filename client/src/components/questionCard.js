@@ -140,7 +140,7 @@ export default class QuestionsCard extends React.Component {
         </CardContent>
         <CardActions>
           {
-            (this.props.type === "Dapper" && JSON.parse(this.props.data.typeSol) === "Dapp" )
+            (this.props.type === "Dapper" && JSON.parse(this.props.data.typeSol) === "Dapp" && new Date().getTime() > this.props.data.timeEnd)
             //  && this.props.data.label) 
             &&
             <Button
@@ -153,7 +153,7 @@ export default class QuestionsCard extends React.Component {
               </Button>
           }
           {
-            (this.props.type === "Solver" && JSON.parse(this.props.data.typeSol) === "smart contract")
+            (this.props.type === "Solver" && new Date().getTime() < this.props.data.timeEnd)
             //  && this.props.data.label) 
             &&
             <Button
