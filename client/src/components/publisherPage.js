@@ -35,6 +35,7 @@ import Footer from "./footer";
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import chainWizImage from "./BG2.png";
+import fleekStorage from '@fleekhq/fleek-storage-js';
 
 import PostPublisher from "./postQuestion";
 const chainWiz = {
@@ -80,8 +81,8 @@ export default class PublisherPage extends React.Component {
     this.setState({ smartContract })
     var account = await web3.eth.getAccounts()
     var fromAcc = account.toString();
-    const questions=await this.state.smartContract.methods.getAllContract("dapp").call({from:fromAcc})
-    this.setState({questions:questions})
+    const questions = await this.state.smartContract.methods.getAllContract("dapp").call({ from: fromAcc })
+    this.setState({ questions: questions })
     console.log(questions)
     console.log("hello")
 
@@ -94,20 +95,26 @@ export default class PublisherPage extends React.Component {
       solutions: [],
       account: "",
       address: '',
-      smartContract:null,
-      contractSolutions:[],
-      dappSolutions:[]
-      
+      smartContract: null,
+      contractSolutions: [],
+      dappSolutions: []
+
     }
   }
- onContractSol= async (ques)=>{
-   const contractSolutions = await this.state.smartContract.methods. publisherContractSol(ques).call({from:this.state.account});
-   this.setState({contractSolutions:contractSolutions});
+  onContractSol = async (ques) => {
+    const contractSolutions = await this.state.smartContract.methods.publisherContractSol(ques).call({ from: this.state.account });
+    this.setState({ contractSolutions: contractSolutions });
   }
-  onDappSol= async (ques)=>{
-    const dappSolutions = await this.state.smartContract.methods. dappSol(ques).call({from:this.state.account});
-    this.setState({dappSolutions:dappSolutions});
-   }
+  onDappSol = async (ques) => {
+    const dappSolutions = await this.state.smartContract.methods.dappSol(ques).call({ from: this.state.account });
+    this.setState({ dappSolutions: dappSolutions });
+  }
+   getQuestion = async(val) => {
+    const myFile = await fleekStorage.getFileFromHash({
+      hash: val,
+    })
+    return myFile
+  }
 
   render() {
     return (
@@ -230,7 +237,9 @@ export default class PublisherPage extends React.Component {
                           <TableRow key={row.name}>
                             <TableCell component="th" scope="row">
                               <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + row.question} target="_blank" >
-                                {row.question}  </a>
+                                {row.question}
+                                {this.getQuestion(row.ipfshash)}
+                              </a>
                             </TableCell>
                             <TableCell align="right">{row.reward}</TableCell>
                             <TableCell align="right">{row.timestamp}</TableCell>
