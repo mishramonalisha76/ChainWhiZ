@@ -69,7 +69,8 @@ export default class QuestionsCard extends React.Component {
       smartContract: null,
       web3: null,
       account: null,
-      question: ""
+      question: "",
+      dappSolveLinkDialog: false
     }
   }
   captureFile = (event) => {
@@ -139,16 +140,37 @@ export default class QuestionsCard extends React.Component {
         </CardContent>
         <CardActions>
           {
-            (this.props.type === "Solver" && this.props.data.label) &&
+            (this.props.type === "Dapper" && JSON.parse(this.props.data.typeSol) === "Dapp" && new Date().getTime() > this.props.data.timeEnd)
+            //  && this.props.data.label) 
+            &&
+            <Button
+              color="primary"
+              variant="outlined"
+              size="small"
+              onClick={() => { this.setState({ dappSolveLinkDialog: true }) }}
+            >
+              Solve
+              </Button>
+          }
+          {
+            (this.props.type === "Solver" && new Date().getTime() < this.props.data.timeEnd)
+            //  && this.props.data.label) 
+            &&
             <Button
               color="primary"
               variant="outlined"
               size="small"
               onClick={() => { this.setState({ solveDialog: true }) }}
-            >Solve</Button>
+            >
+              Solve
+              </Button>
           }
           {
-            (this.props.type === "Voter" && this.props.data.label) &&
+            // (
+            this.props.type === "Voter"
+            //  && this.props.data.label
+            //  )
+            &&
             <Link
               style={{ textDecoration: "none" }}
               to={{
@@ -176,12 +198,12 @@ export default class QuestionsCard extends React.Component {
               <Grid container spacing={2} item xs={12} md={12}>
                 <Grid item xs={10} md={10}>
                   <Typography variant="title" color="inherit" >
-                    {"Public Address :-" + this.props.data.address}
+                    {"Public Address :-" + this.props.data.publisher}
                   </Typography>
                 </Grid>
                 <Grid item xs={2} md={2}>
                   <Typography variant="subheading" color="inherit" >
-                    {"Date :-" + this.props.data.timestamp}
+                    {"Date :-" + this.props.data.date}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} md={12}>
@@ -190,7 +212,8 @@ export default class QuestionsCard extends React.Component {
                   </Typography>
                   <Typography color="textSecondary" variant="h6" gutterBottom>
                     <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.props.data.question} target="_blank" >
-                      {this.props.data.question}  </a>
+                      {this.props.data.question}
+                    </a>
                   </Typography>
                 </Grid>
                 <Grid item xs={12} md={12}>
@@ -236,6 +259,55 @@ export default class QuestionsCard extends React.Component {
 
                 this.setState({ solveDialog: false });
                 this.onSubmit();
+              }}
+              color="primary"
+              autoFocus
+              variant="outlined"
+            >
+              Submit
+          </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open={this.state.dappSolveLinkDialog}
+          maxWidth={"md"}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Solve </DialogTitle>
+          <Grid container>
+            <DialogContent>
+              <Grid container spacing={2} item xs={12} md={12}>
+
+                <Grid item xs={12} md={12}>
+                  <TextField
+                    fullWidth
+                    variant="outlined"
+                    type="text"
+                    value={this.state.dappVideoLink}
+                    label={"Enter Youtube Video Link"}
+                    onChange={(e) => { this.setState({ dappVideoLink: e.target.value }) }}
+                  />
+                </Grid>
+              </Grid>
+            </DialogContent>
+          </Grid>
+          <DialogActions>
+            <Button
+              onClick={() => {
+                this.setState({ dappSolveLinkDialog: false });
+                // this.loadBlockchainData()
+              }}
+              color="primary"
+              variant="outlined"
+            >
+              Close
+          </Button>
+            <Button
+              onClick={() => {
+
+                this.setState({ dappSolveLinkDialog: false });
+                // this.onSubmit();
               }}
               color="primary"
               autoFocus

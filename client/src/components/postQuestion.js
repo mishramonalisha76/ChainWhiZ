@@ -101,7 +101,7 @@ export default class PostPublisher extends React.Component {
       postReward: "",
       noOfDays: "",
       smartContract: null,
-      dappContract:null,
+      dappContract: null,
       web3: null,
       buffer: null,
       account: null,
@@ -117,7 +117,7 @@ export default class PostPublisher extends React.Component {
     }
 
   }
-  
+
   onDappSubmit = async (event) => {
 
     var today = new Date();
@@ -136,19 +136,19 @@ export default class PostPublisher extends React.Component {
     console.log(this.state.postRewardDappSmartContract);
     console.log(this.state.postRewardDappSmartContractSecond);
     if (uploadedFile) {
-      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract,this.state.postRewardDappSmartContractSecond, date, timeStart, 1000,JSON.stringify("Dapp"),2000).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract, this.state.postRewardDappSmartContractSecond, date, timeStart, this.state.noOfDaysForSmartContract * 24 * 3600, "Dapp", this.state.noOfDaysForSmartContract * 24 * 3600 + this.state.noOfDaysForSmartContractDapp * 24 * 3600).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
 
 
       })
-      
+
 
 
     }
 
 
   }
-  
+
   onContractSubmit = async (event) => {
 
     var today = new Date();
@@ -165,7 +165,7 @@ export default class PostPublisher extends React.Component {
 
     console.log(uploadedFile);
     if (uploadedFile) {
-      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract,0, date, timeStart, 1000,"smart contract",0).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, 0, date, timeStart, this.state.noOfDays * 24 * 3600, "smart contract", 0).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
 
 
@@ -222,7 +222,7 @@ export default class PostPublisher extends React.Component {
                     fullWidth
                     type="number"
                     value={this.state.postRewardDappSmartContract}
-                    onChange={(e) => { this.setState({postRewardDappSmartContract: e.target.value }) }}
+                    onChange={(e) => { this.setState({ postRewardDappSmartContract: e.target.value }) }}
 
                   />
                 </Grid>
@@ -268,7 +268,7 @@ export default class PostPublisher extends React.Component {
                 <Grid item xs={12} md={12} style={{ textAlign: "right" }}>
 
                   <Button
-                   // disabled={this.state.postReward === "" ? true : false}
+                    // disabled={this.state.postReward === "" ? true : false}
                     color="primary" variant="outlined"
                     onClick={this.onDappSubmit}
                   >
