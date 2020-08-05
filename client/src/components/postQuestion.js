@@ -136,7 +136,7 @@ export default class PostPublisher extends React.Component {
     console.log(this.state.postRewardDappSmartContract);
     console.log(this.state.postRewardDappSmartContractSecond);
     if (uploadedFile) {
-      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, window.web3.utils.toWei(this.state.postRewardDappSmartContract, 'ether'), window.web3.utils.toWei(this.state.postRewardDappSmartContractSecond, 'ether'), date, timeStart, new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContract), "Dapp", new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContract) + new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContractDapp)).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, window.web3.utils.toWei(this.state.postRewardDappSmartContract, 'ether'), window.web3.utils.toWei(this.state.postRewardDappSmartContractSecond, 'ether'), date, timeStart, new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContract), "dapp", new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContract) + new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContractDapp)).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
       })
 
