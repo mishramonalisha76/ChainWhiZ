@@ -136,10 +136,8 @@ export default class PostPublisher extends React.Component {
     console.log(this.state.postRewardDappSmartContract);
     console.log(this.state.postRewardDappSmartContractSecond);
     if (uploadedFile) {
-      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract, this.state.postRewardDappSmartContractSecond, date, timeStart, new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContract), "Dapp", new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContract) + new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContractDapp)).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, window.web3.utils.toWei(this.state.postRewardDappSmartContract, 'ether'), window.web3.utils.toWei(this.state.postRewardDappSmartContractSecond, 'ether'), date, timeStart, new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContract), "Dapp", new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContract) + new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContractDapp)).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
-
-
       })
 
 
@@ -165,13 +163,13 @@ export default class PostPublisher extends React.Component {
 
     console.log(uploadedFile);
     if (uploadedFile) {
-      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, 0, date, timeStart, this.state.noOfDays * 24 * 3600, "smart contract", 0).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, window.web3.utils.toWei(this.state.postReward, 'ether'), 0, date, timeStart, this.state.noOfDays * 24 * 3600, "smart contract", 0).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
 
 
       })
     }
-
+    console.log("Fucking work")
 
   }
   handleChange = (event, newValue) => {
@@ -318,7 +316,7 @@ export default class PostPublisher extends React.Component {
                   <Button
                     disabled={this.state.postReward === "" ? true : false}
                     color="primary" variant="outlined"
-                  //  onClick={this.onSubmit}
+                    onClick={this.onContractSubmit}
                   >
                     Post
                        </Button>
