@@ -171,7 +171,7 @@ export default class PostPublisher extends React.Component {
 
       })
     }
-
+    console.log("Fucking work")
 
   }
   handleChange = (event, newValue) => {
@@ -318,7 +318,7 @@ export default class PostPublisher extends React.Component {
                   <Button
                     disabled={this.state.postReward === "" ? true : false}
                     color="primary" variant="outlined"
-                  //  onClick={this.onSubmit}
+                   onClick={this.onContractSubmit}
                   >
                     Post
                        </Button>

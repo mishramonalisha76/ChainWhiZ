@@ -50,39 +50,40 @@ const btn = {
 
 export default class PublisherPage extends React.Component {
 
-  // async componentDidMount() {
-  //   await this.loadWeb3()
-  //   await this.loadBlockchainData()
-  // }
-  // async componentWillReceiveProps(prev, next) {
-  //   this.setState({});
-  //   await this.loadBlockchainData()
-  // }
+  async componentDidMount() {
+    await this.loadWeb3()
+    await this.loadBlockchainData()
+  }
+  async componentWillReceiveProps(prev, next) {
+    this.setState({});
+    await this.loadBlockchainData()
+  }
 
-  // async loadWeb3() {
-  //   if (window.ethereum) {
-  //     window.web3 = new Web3(window.ethereum)
-  //     await window.ethereum.enable()
-  //   }
-  //   else if (window.web3) {
-  //     window.web3 = new Web3(window.web3.currentProvider)
-  //   }
-  //   else {
-  //     window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
-  //   }
-  // }
+  async loadWeb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+      await window.ethereum.enable()
+    }
+    else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider)
+    }
+    else {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+    }
+  }
 
-  // async loadBlockchainData() {
-  //   const web3 = window.web3
-  //   const accounts = await web3.eth.getAccounts()
-  //   this.setState({ account: accounts[0], loader: true })
-  //   const smartContract = new web3.eth.Contract(contractABI, "0xbbfe5fb0e14cef295789dff039d29c90d4ed7b76")
-  //   this.setState({ ipfscontract })
-  //   var account = await web3.eth.getAccounts()
-  //   var fromAcc = account.toString();
+  async loadBlockchainData() {
+    const web3 = window.web3
+    const accounts = await web3.eth.getAccounts()
+    this.setState({ account: accounts[0], loader: true })
+    const smartContract = new web3.eth.Contract(contractABI, "0xbbfe5fb0e14cef295789dff039d29c90d4ed7b76")
+    this.setState({ smartContract })
+    var account = await web3.eth.getAccounts()
+    var fromAcc = account.toString();
+    const questions=await this.state.smartContract.methods.getAllContract("Smart contract").call({from:fromAcc})
+    console.log(questions)
 
-
-  // }
+  }
 
   constructor(props) {
     super(props);
@@ -90,7 +91,8 @@ export default class PublisherPage extends React.Component {
       questions: [],
       solutions: [],
       account: "",
-      address: ''
+      address: '',
+      smartContract:null
     }
   }
 
