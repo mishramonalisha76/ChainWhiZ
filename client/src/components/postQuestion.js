@@ -136,10 +136,8 @@ export default class PostPublisher extends React.Component {
     console.log(this.state.postRewardDappSmartContract);
     console.log(this.state.postRewardDappSmartContractSecond);
     if (uploadedFile) {
-      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, window.web3.utils.toWei(this.state.postRewardDappSmartContract,'ether'), window.web3.utils.toWei(this.state.postRewardDappSmartContractSecond,'ether'), date, timeStart, this.state.noOfDaysForSmartContract * 24 * 3600, "Dapp", this.state.noOfDaysForSmartContract * 24 * 3600 + this.state.noOfDaysForSmartContractDapp * 24 * 3600).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, window.web3.utils.toWei(this.state.postRewardDappSmartContract, 'ether'), window.web3.utils.toWei(this.state.postRewardDappSmartContractSecond, 'ether'), date, timeStart, new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContract), "Dapp", new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContract) + new Date().setDate(new Date().getDate() + this.state.noOfDaysForSmartContractDapp)).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
-
-
       })
 
 
@@ -165,7 +163,7 @@ export default class PostPublisher extends React.Component {
 
     console.log(uploadedFile);
     if (uploadedFile) {
-      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, window.web3.utils.toWei(this.state.postReward,'ether'), 0, date, timeStart, this.state.noOfDays * 24 * 3600, "smart contract", 0).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, window.web3.utils.toWei(this.state.postReward, 'ether'), 0, date, timeStart, this.state.noOfDays * 24 * 3600, "smart contract", 0).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
 
 
@@ -318,7 +316,7 @@ export default class PostPublisher extends React.Component {
                   <Button
                     disabled={this.state.postReward === "" ? true : false}
                     color="primary" variant="outlined"
-                   onClick={this.onContractSubmit}
+                    onClick={this.onContractSubmit}
                   >
                     Post
                        </Button>
