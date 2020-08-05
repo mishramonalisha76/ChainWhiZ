@@ -170,7 +170,7 @@ export default class Footer extends React.Component {
                   }
                 />
               </ListItem>
-              <ListItem style={{ paddingTop: 0 }}>
+              {/* <ListItem style={{ paddingTop: 0 }}>
                 <ListItemText
                   primary={
                     <Typography style={{ color: "white" }} variant="body1"  >
@@ -178,7 +178,7 @@ export default class Footer extends React.Component {
                     </Typography>
                   }
                 />
-              </ListItem>
+              </ListItem> */}
             </List>
           </Grid>
 
