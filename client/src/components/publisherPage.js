@@ -81,6 +81,7 @@ export default class PublisherPage extends React.Component {
     var account = await web3.eth.getAccounts()
     var fromAcc = account.toString();
     const questions=await this.state.smartContract.methods.getAllContract("dapp").call({from:fromAcc})
+    this.setState({questions:questions})
     console.log(questions)
     console.log("hello")
 
@@ -93,10 +94,20 @@ export default class PublisherPage extends React.Component {
       solutions: [],
       account: "",
       address: '',
-      smartContract:null
+      smartContract:null,
+      contractSolutions:[],
+      dappSolutions:[]
+      
     }
   }
-
+ onContractSol= async (ques)=>{
+   const contractSolutions = await this.state.smartContract.methods. publisherContractSol(ques).call({from:this.state.account});
+   this.setState({contractSolutions:contractSolutions});
+  }
+  onDappSol= async (ques)=>{
+    const dappSolutions = await this.state.smartContract.methods. dappSol(ques).call({from:this.state.account});
+    this.setState({dappSolutions:dappSolutions});
+   }
 
   render() {
     return (
