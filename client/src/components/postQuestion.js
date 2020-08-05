@@ -165,7 +165,7 @@ export default class PostPublisher extends React.Component {
 
     console.log(uploadedFile);
     if (uploadedFile) {
-      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postRewardDappSmartContract, 0, date, timeStart, 1000, "smart contract", 0).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, this.state.postReward, 0, date, timeStart, this.state.noOfDays * 24 * 3600, "smart contract", 0).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
 
 
