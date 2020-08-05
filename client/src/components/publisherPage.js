@@ -80,8 +80,9 @@ export default class PublisherPage extends React.Component {
     this.setState({ smartContract })
     var account = await web3.eth.getAccounts()
     var fromAcc = account.toString();
-    const questions=await this.state.smartContract.methods.getAllContract("Smart contract").call({from:fromAcc})
+    const questions=await this.state.smartContract.methods.getAllContract("dapp").call({from:fromAcc})
     console.log(questions)
+    console.log("hello")
 
   }
 
