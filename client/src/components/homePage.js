@@ -125,7 +125,7 @@ export default class HomePage extends React.Component {
       }
     );
     if (this.state.role === "Publisher") {
-      a = regPublisherVerify();
+      a = regPublisher();
       if (a !== null) {
         this.loadBlockchainData();
       }
@@ -134,20 +134,20 @@ export default class HomePage extends React.Component {
     }
 
     else if (this.state.role === "Voter") {
-      a = regVoterVerify();
+      a = regVoter();
       if (a !== null) {
         this.loadBlockchainData();
       }
     }
     else if (this.state.role === "Solver") {
-      a = regSolverVerify();
+      a = regSolver();
       if (a !== null) {
         this.loadBlockchainData();
       }
 
     }
     else if (this.state.roleValue === "Dapper") {
-      a = regDapperVerify();
+      a = regDapper();
       if (a !== null) {
         this.loadBlockchainData();
       }
