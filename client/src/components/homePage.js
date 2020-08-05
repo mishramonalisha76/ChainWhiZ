@@ -4,7 +4,7 @@ import regPub from "../js/regPublisher"
 import regVoter from "../js/regVoter"
 import regSolver from "../js/regSolver"
 import regDapper from "../js/regDapper"
-import fleekStorage from '@fleekhq/fleek-storage-js'
+// import fleekStorage from '@fleekhq/fleek-storage-js'
 import { contractABI } from "../js/contract";
 import { rolesABI } from "../js/roles";
 import Card from '@material-ui/core/Card';
@@ -125,7 +125,7 @@ export default class HomePage extends React.Component {
       }
     );
     if (this.state.role === "Publisher") {
-      a = regPublisherVerify();
+      a = regPub();
       if (a !== null) {
         this.loadBlockchainData();
       }
@@ -134,7 +134,7 @@ export default class HomePage extends React.Component {
     }
 
     else if (this.state.role === "Voter") {
-      a = regVoterVerify();
+      a = regVoter();
       if (a !== null) {
         this.loadBlockchainData();
       }
@@ -148,7 +148,7 @@ export default class HomePage extends React.Component {
 
     }
     else if (this.state.roleValue === "Dapper") {
-      a = regDapperVerify();
+      a = regDapper();
       if (a !== null) {
         this.loadBlockchainData();
       }

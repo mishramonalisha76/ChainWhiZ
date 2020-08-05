@@ -26,8 +26,8 @@ export default class QuestionsCard extends React.Component {
 
 
   async componentWillMount() {
-    // await this.loadWeb3()
-    // await this.loadBlockchainData()
+    await this.loadWeb3()
+    await this.loadBlockchainData()
     const myFile = await fleekStorage.getFileFromHash({
       hash: this.props.data.ipfshash,
     })
@@ -36,31 +36,39 @@ export default class QuestionsCard extends React.Component {
     })
   }
 
-  // async loadWeb3() {
-  //   if (window.ethereum) {
-  //     window.web3 = new Web3(window.ethereum)
-  //     await window.ethereum.enable()
-  //   }
-  //   else if (window.web3) {
-  //     window.web3 = new Web3(window.web3.currentProvider)
-  //   }
-  //   else {
-  //     window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
-  //   }
-  // }
+  async loadWeb3() {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+      await window.ethereum.enable()
+    }
+    else if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider)
+    }
+    else {
+      window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!')
+    }
+  }
 
-  // async loadBlockchainData() {
+  async loadBlockchainData() {
 
-  //   const web3 = window.web3
+    const web3 = window.web3
+    // this.setState({web3:web3});
+    const accounts = await web3.eth.getAccounts()
+    this.setState({
+      account: accounts[0],
+      loader: true
+    })
+    const smartContract = new web3.eth.Contract(contractABI, "0xbbfe5fb0e14cef295789dff039d29c90d4ed7b76")
+    this.setState({ smartContract })
 
-  //   const accounts = await web3.eth.getAccounts()
-  //   this.setState({ account: accounts[0], loader: true })
-  //   const ipfscontract = new web3.eth.Contract(ipfsABI, "0xa35ab86d2e8a609e8ee044eb6c47aef293e24596")
-  //   this.setState({ ipfscontract })
 
-  //   var account = await web3.eth.getAccounts()
-  //   var fromAcc = account.toString();
-  // }
+    var account = await web3.eth.getAccounts()
+    var fromAcc = account.toString();
+    console.log(fromAcc)
+
+
+
+  }
   constructor(props) {
     super(props);
     this.state = {
@@ -83,29 +91,27 @@ export default class QuestionsCard extends React.Component {
     }
   }
 
-  onSubmit = () => {
-    // console.log(this.state.contract);
-    ipfs.add(this.state.buffer, (error, result) => {
-      var today = new Date();
+  onSubmit = async () => {
+   
+    var today = new Date();
+    var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
+    const uploadedFile = await fleekStorage.upload({
+      apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
+      apiSecret: 'GMFzg7TFJC2fjhwoz9slkfnncmV/TAHK/4WVeI0qpYY=',
+      key: this.state.account + date,
+      data: this.state.buffer,
+    });
+    if (uploadedFile) {
+      this.state.smartContract.methods.pushSolution(this.props.data.ipfshash, this.state.ethFiddleLink, uploadedFile.hash,).send({ from: this.state.account }).then((r) => {
 
-
-      this.state.smartContract.methods.pushSolution(this.props.data.question, this.state.ethFiddleLink, result[0].hash,).send({ from: this.state.account }).then((r) => {
-
-        // return window.location.reload();
+        return window.location.reload();
         // this.setState({})
 
       })
-      if (error)
-        console.log(error);
-
-
-    })
-
-
+    }
   }
-  async getQuestion() {
 
-  }
+
 
   render() {
     // console.log(this.props.data);
@@ -208,12 +214,12 @@ export default class QuestionsCard extends React.Component {
                 </Grid>
                 <Grid item xs={12} md={12}>
                   <Typography variant="h6" gutterBottom>
-                    {"Problem Statement Link:"}
+                    {"Problem Statement :"}
                   </Typography>
                   <Typography color="textSecondary" variant="h6" gutterBottom>
-                    <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.props.data.question} target="_blank" >
-                      {this.props.data.question}
-                    </a>
+                    {/* <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.props.data.question} target="_blank" > */}
+                      {this.state.question}
+                    {/* </a> */}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} md={12}>
