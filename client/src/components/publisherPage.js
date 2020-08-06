@@ -102,9 +102,16 @@ export default class PublisherPage extends React.Component {
     }
   }
   onContractSol = async (ques) => {
+    var arr = []
     const contractSolutions = await this.state.smartContract.methods.publisherContractSol(ques).call({ from: this.state.account });
     console.log(contractSolutions)
-    this.setState({ contractSolutions: contractSolutions });
+    for (var i = 0; i < contractSolutions.length; i++) {
+      for (var j = 0; j < contractSolutions[i].length; j++) {
+        arr.push((contractSolutions[i])[j])
+      }
+    }
+    console.log(arr)
+    this.setState({ contractSolutions: arr });
   }
   onDappSol = async (ques) => {
     const dappSolutions = await this.state.smartContract.methods.dappSol(ques).call({ from: this.state.account });
@@ -288,22 +295,24 @@ export default class PublisherPage extends React.Component {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {this.state.contractSolutions.map((row) => (
-                              <TableRow key={row.name}>
+                            {/* {this.state.contractSolutions.map((row) => ( */}
+                            {this.state.contractSolutions.length >0 &&
+                              <TableRow >
                                 <TableCell component="th" scope="row">
-                                  {row.solver}
+                                  {this.state.contractSolutions[0]}
                                 </TableCell>
-                                <TableCell align="right"><a style={{ fontSize: 15 }} href={row.solutionLink} target="_blank" >{row.solutionLink}</a></TableCell>
+                                <TableCell align="right"><a style={{ fontSize: 15 }} href={this.state.contractSolutions[1]} target="_blank" >{this.state.contractSolutions[1]}</a></TableCell>
 
                                 <TableCell align="right">
-                                  <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + row.readme} target="_blank" >
-                                    {row.readme}  </a>
+                                  <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.state.contractSolutions[2]} target="_blank" >
+                                    {this.state.contractSolutions[2]}  </a>
                                 </TableCell>
                                 <TableCell align="right">
-                                  {row.votePercent}
+                                  {this.state.contractSolutions[3]}
                                 </TableCell>
                               </TableRow>
-                            ))}
+  }
+                            {/* ))} */}
                           </TableBody>
                         </Table>
                       </Grid>

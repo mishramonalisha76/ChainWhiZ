@@ -92,7 +92,7 @@ export default class QuestionsCard extends React.Component {
   }
 
   onSubmit = async () => {
-   
+
     var today = new Date();
     var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
     const uploadedFile = await fleekStorage.upload({
@@ -146,6 +146,7 @@ export default class QuestionsCard extends React.Component {
         </CardContent>
         <CardActions>
           {
+
             (this.props.type === "Dapper" && this.props.data.typeSol === "Dapp" && new Date().setDate(new Date().getDate()) > this.props.data.timeEnd)
             //  && this.props.data.label) 
             &&
@@ -158,6 +159,19 @@ export default class QuestionsCard extends React.Component {
               Solve
               </Button>
           }
+          {/* {
+            (this.props.type === "Dapper" && this.props.data.typeSol === "Dapp" && new Date().setDate(new Date().getDate()) > this.props.data.timeEnd)
+            //  && this.props.data.label) 
+            &&
+            <Button
+              color="primary"
+              variant="outlined"
+              size="small"
+              onClick={() => { this.setState({ DappViewSolutions: true }) }}
+            >
+              Dapp
+              </Button>
+          } */}
           {
             (this.props.type === "Solver" && new Date().setDate(new Date().getDate()) < this.props.data.timeEnd)
             //  && this.props.data.label) 
@@ -218,7 +232,7 @@ export default class QuestionsCard extends React.Component {
                   </Typography>
                   <Typography color="textSecondary" variant="h6" gutterBottom>
                     {/* <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.props.data.question} target="_blank" > */}
-                      {this.state.question}
+                    {this.state.question}
                     {/* </a> */}
                   </Typography>
                 </Grid>
