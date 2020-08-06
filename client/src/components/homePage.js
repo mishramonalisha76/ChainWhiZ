@@ -3,7 +3,7 @@ import Web3 from "web3";
 import regPub from "../js/regPublisher"
 import regVoter from "../js/regVoter"
 import regSolver from "../js/regSolver"
-import regDapper from "../js/regDapper"
+import regDapperVerify from "../js/regDapper"
 // import fleekStorage from '@fleekhq/fleek-storage-js'
 import { contractABI } from "../js/contract";
 import { rolesABI } from "../js/roles";
@@ -147,8 +147,9 @@ export default class HomePage extends React.Component {
       }
 
     }
-    else if (this.state.roleValue === "Dapper") {
-      a = regDapper();
+    else if (this.state.role === "Dapper") {
+      a = regDapperVerify();
+      console.log("Dapperverify")
       if (a !== null) {
         this.loadBlockchainData();
       }
