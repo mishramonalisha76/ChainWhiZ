@@ -117,6 +117,7 @@ export default class PublisherPage extends React.Component {
   onDappSol = async (ques) => {
     const dappSolutions = await this.state.smartContract.methods.dappSol(ques).call({ from: this.state.account });
     this.setState({ dappSolutions: dappSolutions });
+    console.log(dappSolutions);
   }
   getQuestion = async (val) => {
     console.log(val)
@@ -265,7 +266,7 @@ export default class PublisherPage extends React.Component {
                                 <Button color="primary" variant="outlined" size="small"
                                   onClick={() => {
                                     this.setState({ dappSolutionDialog: true });
-                                    // this.onContractSol(row.ipfshash);
+                                    this.onDappSol(row.ipfshash);
                                   }}
                                 >Dapp</Button>
                               }
@@ -315,11 +316,11 @@ export default class PublisherPage extends React.Component {
                                 <TableCell align="right"><a style={{ fontSize: 15 }} href={this.state.contractSolutions[1]} target="_blank" >{this.state.contractSolutions[1]}</a></TableCell>
 
                                 <TableCell align="right">
-                                  <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.state.contractSolutions[2]} target="_blank" >
-                                    {this.state.contractSolutions[2]}  </a>
+                                  <a style={{ fontSize: 15 }} href={ this.state.contractSolutions[8]} target="_blank" >
+                                    {this.state.contractSolutions[8]}  </a>
                                 </TableCell>
                                 <TableCell align="right">
-                                  {this.state.contractSolutions[3]}
+                                  {this.state.contractSolutions[9]}
                                 </TableCell>
                               </TableRow>
                             }
@@ -357,27 +358,26 @@ export default class PublisherPage extends React.Component {
                         <Table aria-label="simple table">
                           <TableHead>
                             <TableRow>
+                              <TableCell>Dapp Address</TableCell>
                               <TableCell>Video Link</TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
                             {/* {this.state.contractSolutions.map((row) => ( */}
-                            {/* {this.state.contractSolutions.length > 0 &&
+                            {this.state.dappSolutions.length > 0 &&
                               <TableRow >
                                 <TableCell component="th" scope="row">
-                                  {this.state.contractSolutions[0]}
+                                  {this.state.dappSolutions[0]}
                                 </TableCell>
-                                <TableCell align="right"><a style={{ fontSize: 15 }} href={this.state.contractSolutions[1]} target="_blank" >{this.state.contractSolutions[1]}</a></TableCell>
+                                
 
                                 <TableCell align="right">
-                                  <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.state.contractSolutions[2]} target="_blank" >
-                                    {this.state.contractSolutions[2]}  </a>
+                                  <a style={{ fontSize: 15 }} href={ this.state.dappSolutions[1]} target="_blank" >
+                                    {this.state.dappSolutions[1]}  </a>
                                 </TableCell>
-                                <TableCell align="right">
-                                  {this.state.contractSolutions[3]}
-                                </TableCell>
+                               
                               </TableRow>
-                            } */}
+                            }
                             {/* ))} */}
                           </TableBody>
                         </Table>

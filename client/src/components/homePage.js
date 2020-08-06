@@ -118,6 +118,7 @@ export default class HomePage extends React.Component {
   }
   getRoles = () => {
     var a = null;
+
     this.setState(
       {
         openSnackBar: true,
@@ -147,7 +148,7 @@ export default class HomePage extends React.Component {
       }
 
     }
-    else if (this.state.roleValue === "Dapper") {
+    else if (this.state.role === "Dapper") {
       a = regDapper();
       if (a !== null) {
         this.loadBlockchainData();
