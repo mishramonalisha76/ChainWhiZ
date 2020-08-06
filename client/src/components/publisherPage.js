@@ -360,6 +360,7 @@ export default class PublisherPage extends React.Component {
                             <TableRow>
                               <TableCell>Dapp Address</TableCell>
                               <TableCell>Video Link</TableCell>
+                              <TableCell>Choose</TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
@@ -375,7 +376,14 @@ export default class PublisherPage extends React.Component {
                                   <a style={{ fontSize: 15 }} href={ this.state.dappSolutions[1]} target="_blank" >
                                     {this.state.dappSolutions[1]}  </a>
                                 </TableCell>
-                               
+                                <TableCell component="th" scope="row">
+                                <Button color="primary" variant="outlined" size="small"
+                                  onClick={() => {
+                                    this.setState({ dappSolutionDialog: true });
+                                    //this.onDappSol(row.ipfshash);
+                                  }}
+                                >Approve</Button>
+                                </TableCell>
                               </TableRow>
                             }
                             {/* ))} */}
