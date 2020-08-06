@@ -167,7 +167,7 @@ export default class QuestionsCard extends React.Component {
         <CardActions>
           {
 
-            (this.props.type === "Dapper" && this.props.data.typeSol === "Dapp" && new Date().setDate(new Date().getDate()) > this.props.data.timeEnd)
+            (this.props.type === "Dapper" && this.props.data.typeSol === "dapp" && new Date().setDate(new Date().getDate()) > this.props.data.timeEnd)
             //  && this.props.data.label) 
             &&
             <Button

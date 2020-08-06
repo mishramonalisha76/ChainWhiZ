@@ -97,7 +97,8 @@ export default class PublisherPage extends React.Component {
       address: '',
       smartContract: null,
       contractSolutions: [],
-      dappSolutions: []
+      dappSolutions: [],
+      dappSolutionDialog: false
 
     }
   }
@@ -259,6 +260,16 @@ export default class PublisherPage extends React.Component {
                                   this.onContractSol(row.ipfshash);
                                 }}
                               >View</Button>
+                              {
+                                row.typeSol === "dapp" &&
+                                <Button color="primary" variant="outlined" size="small"
+                                  onClick={() => {
+                                    this.setState({ dappSolutionDialog: true });
+                                    // this.onContractSol(row.ipfshash);
+                                  }}
+                                >Dapp</Button>
+                              }
+
                             </TableCell>
                           </TableRow>
                         ))}
@@ -296,7 +307,7 @@ export default class PublisherPage extends React.Component {
                           </TableHead>
                           <TableBody>
                             {/* {this.state.contractSolutions.map((row) => ( */}
-                            {this.state.contractSolutions.length >0 &&
+                            {this.state.contractSolutions.length > 0 &&
                               <TableRow >
                                 <TableCell component="th" scope="row">
                                   {this.state.contractSolutions[0]}
@@ -311,7 +322,7 @@ export default class PublisherPage extends React.Component {
                                   {this.state.contractSolutions[3]}
                                 </TableCell>
                               </TableRow>
-  }
+                            }
                             {/* ))} */}
                           </TableBody>
                         </Table>
@@ -323,6 +334,61 @@ export default class PublisherPage extends React.Component {
                   <Button
                     onClick={() => {
                       this.setState({ viewDialog: false });
+                    }}
+                    color="primary"
+                    variant="outlined"
+                  >
+                    Close
+          </Button>
+                </DialogActions>
+              </Dialog>
+              <Dialog
+                open={this.state.dappSolutionDialog}
+                maxWidth={"md"}
+                fullWidth={true}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">View solutions for Dapp </DialogTitle>
+                <Grid container>
+                  <DialogContent>
+                    <Grid container spacing={2} item xs={12} md={12}>
+                      <Grid item xs={12} md={12}>
+                        <Table aria-label="simple table">
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>Video Link</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {/* {this.state.contractSolutions.map((row) => ( */}
+                            {/* {this.state.contractSolutions.length > 0 &&
+                              <TableRow >
+                                <TableCell component="th" scope="row">
+                                  {this.state.contractSolutions[0]}
+                                </TableCell>
+                                <TableCell align="right"><a style={{ fontSize: 15 }} href={this.state.contractSolutions[1]} target="_blank" >{this.state.contractSolutions[1]}</a></TableCell>
+
+                                <TableCell align="right">
+                                  <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.state.contractSolutions[2]} target="_blank" >
+                                    {this.state.contractSolutions[2]}  </a>
+                                </TableCell>
+                                <TableCell align="right">
+                                  {this.state.contractSolutions[3]}
+                                </TableCell>
+                              </TableRow>
+                            } */}
+                            {/* ))} */}
+                          </TableBody>
+                        </Table>
+                      </Grid>
+                    </Grid>
+                  </DialogContent>
+                </Grid>
+                <DialogActions>
+                  <Button
+                    onClick={() => {
+                      this.setState({ dappSolutionDialog: false });
                     }}
                     color="primary"
                     variant="outlined"

@@ -26,6 +26,8 @@ import { Link } from "react-router-dom";
 import Loader from "./loader";
 import Footer from "./footer";
 import chainWizImage from "./BG2.png";
+import fleekStorage from '@fleekhq/fleek-storage-js';
+
 const chainWiz = {
   backgroundImage: "url(" + chainWizImage + ")",
   backgroundRepeat: 'no-repeat',
@@ -72,12 +74,17 @@ export default class VoterPage extends React.Component {
 
     var account = await web3.eth.getAccounts()
     var fromAcc = account.toString();
+    var arr = []
 
-    
-      const contractSolutions = await this.state.smartContract.methods.publisherContractSol(this.props.location.state.data.ipfshash).call({ from: this.state.account });
-      console.log(contractSolutions)
-      this.setState({ contractSolutions: contractSolutions });
-    
+    const contractSolutions = await this.state.smartContract.methods.publisherContractSol(this.props.location.state.data.ipfshash).call({ from: this.state.account });
+    console.log(contractSolutions)
+    for (var i = 0; i < contractSolutions.length; i++) {
+      for (var j = 0; j < contractSolutions[i].length; j++) {
+        arr.push((contractSolutions[i])[j])
+      }
+    }
+    this.setState({ contractSolutions: arr, loader: false });
+
 
   }
 
@@ -92,7 +99,7 @@ export default class VoterPage extends React.Component {
       solutions: [],
       loader: true,
       question: "",
-      contractSolutions:[]
+      contractSolutions: []
 
     }
   }
@@ -114,7 +121,7 @@ export default class VoterPage extends React.Component {
     })
   }
   render() {
-    console.log(this.props)
+    console.log(this.state)
     return (
       <div style={{ paddingTop: 8 }}>
         <Grid container justify="center" spacing={2}>
@@ -146,12 +153,12 @@ export default class VoterPage extends React.Component {
                 <Grid container spacing={2}>
                   <Grid item xs={10} md={10}>
                     <Typography variant="title" color="inherit" >
-                      {"Public Address :-" + this.props.location.state.data.address}
+                      {"Public Address :-" + this.props.location.state.data.publisher}
                     </Typography>
                   </Grid>
                   <Grid item xs={2} md={2}>
                     <Typography variant="subheading" color="inherit" >
-                      {"Date :-" + this.props.location.state.data.timestamp}
+                      {"Date :-" + this.props.location.state.data.date}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} md={12}>
@@ -173,60 +180,62 @@ export default class VoterPage extends React.Component {
           </Grid>
           <Grid item xs={12} md={10}>
 
-            {this.state.solutions.length > 0 && <span>
-              {this.state.solutions.map(s => (
-                <div>
-                  <Card raised={true} style={{ borderRadius: 10 }} >
-                    <CardContent>
-                      <Grid container spacing={2}>
-                        <Grid item xs={8} md={8}>
-                          <Typography variant="title" color="inherit" >
-                            {"Public Address:-" + s.solverAddress}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={4} md={4} style={{ display: "inline-flex" }}>
-                          <Typography inline color="inherit" variant="title"
-                          >{"Ethfiddle Link:-"}
-                          </Typography>
-                          <Typography inline color="inherit" variant="title" >
-                            <a style={{ fontSize: 15 }} href={s.solutionLink} target="_blank" >
-                              {s.solutionLink}  </a>
-                          </Typography>
-                        </Grid>
+            {this.state.contractSolutions.length > 0 &&
+              // <span>
+              //   {this.state.contractSolutions.map(s => (
+              <div>
+                <Card raised={true} style={{ borderRadius: 10 }} >
+                  <CardContent>
+                    <Grid container spacing={2}>
+                      <Grid item xs={8} md={8}>
+                        <Typography variant="title" color="inherit" >
+                          {"Public Address:-" + this.state.contractSolutions[0]}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={4} md={4} style={{ display: "inline-flex" }}>
+                        <Typography inline color="inherit" variant="title"
+                        >{"Ethfiddle Link:-"}
+                        </Typography>
+                        <Typography inline color="inherit" variant="title" >
+                          <a style={{ fontSize: 15 }} href={this.state.contractSolutions[1]} target="_blank" >
+                            {this.state.contractSolutions[1]}  </a>
+                        </Typography>
+                      </Grid>
 
-                        <Grid item xs={8} md={8} style={{ display: "inline-flex", paddingTop: 18 }}>
+                      <Grid item xs={8} md={8} style={{ display: "inline-flex", paddingTop: 18 }}>
 
-                          <Typography inline color="inherit" variant="title">{"ReadMe:-"}</Typography>
-                          <Typography inline color="inherit" variant="title">
-                            <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + s.readMe} target="_blank" >
-                              {s.readMe}  </a>
-                          </Typography>
-
-                        </Grid>
-                        <Grid item xs={4} md={4} style={{ textAlign: "center" }}>
-                          <IconButton
-                            onClick={() => { this.onAgree(s.solutionLink, this.props.location.state.data.ipfshash) }} >
-                            <Icon>
-                              thumb_up_alt
-                      </Icon>
-                          </IconButton>
-                          <IconButton
-                            onClick={() => { this.onDisagree(s.solutionLink, this.props.location.state.data.ipfshash) }} >
-                            <Icon>
-                              thumb_down_alt
-                      </Icon>
-                          </IconButton>
-
-                        </Grid>
+                        <Typography inline color="inherit" variant="title">{"ReadMe:-"}</Typography>
+                        <Typography inline color="inherit" variant="title">
+                          <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.state.contractSolutions[2]} target="_blank" >
+                            {this.state.contractSolutions[2]}  </a>
+                        </Typography>
 
                       </Grid>
-                    </CardContent>
-                  </Card>
+                      <Grid item xs={4} md={4} style={{ textAlign: "center" }}>
+                        <IconButton
+                          onClick={() => { this.onAgree(this.state.contractSolutions[1], this.props.location.state.data.ipfshash) }} >
+                          <Icon>
+                            thumb_up_alt
+                      </Icon>
+                        </IconButton>
+                        <IconButton
+                          onClick={() => { this.onDisagree(this.state.contractSolutions[1], this.props.location.state.data.ipfshash) }} >
+                          <Icon>
+                            thumb_down_alt
+                      </Icon>
+                        </IconButton>
 
-                  <br />
-                </div>
+                      </Grid>
 
-              ))}</span>}
+                    </Grid>
+                  </CardContent>
+                </Card>
+
+                <br />
+              </div>
+
+              // ))}</span>
+            }
 
           </Grid>
         </Grid>

@@ -86,30 +86,29 @@ export default class HomePage extends React.Component {
     console.log(fromAcc)
     var role = await rolescontract.methods.verifyPublisher().call({ from: fromAcc });
     console.log(role)
-    this.setState({roleValue:"Guest"})
-    // if (role) {
-    //   this.setState({ roleValue: "Publisher" });
-    // }
-    // else {
-    //   role = await this.state.rolescontract.methods.verifyVoter().call({ from: fromAcc });
-    //   if (role)
-    //     this.setState({ roleValue: "Voter" });
-    //   else {
-    //     role = await this.state.rolescontract.methods.verifySolver().call({ from: fromAcc });
-    //     if (role)
-    //       this.setState({ roleValue: "Solver" });
-    //     else {
-    //       role = await rolescontract.methods.verifyDapper().call({ from: fromAcc });
-    //       if (role) {
-    //         this.setState({ roleValue: "Dapper" });
-    //         // window.location.reload();
-    //       }
-    //       else {
-    //         this.setState({ roleValue: "Guest" });
-    //       }
-    //     }
-    //   }
-    // }
+    if (role) {
+      this.setState({ roleValue: "Publisher" });
+    }
+    else {
+      role = await this.state.rolescontract.methods.verifyVoter().call({ from: fromAcc });
+      if (role)
+        this.setState({ roleValue: "Voter" });
+      else {
+        role = await this.state.rolescontract.methods.verifySolver().call({ from: fromAcc });
+        if (role)
+          this.setState({ roleValue: "Solver" });
+        else {
+          role = await rolescontract.methods.verifyDapper().call({ from: fromAcc });
+          if (role) {
+            this.setState({ roleValue: "Dapper" });
+            // window.location.reload();
+          }
+          else {
+            this.setState({ roleValue: "Guest" });
+          }
+        }
+      }
+    }
 
     const unsplitQuestion = await this.state.smartContract.methods.questions().call({ from: fromAcc });
     console.log(unsplitQuestion)
