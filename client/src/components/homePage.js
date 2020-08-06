@@ -136,6 +136,7 @@ export default class HomePage extends React.Component {
 
     else if (this.state.role === "Voter") {
       a = regVoter();
+      
       if (a !== null) {
         this.loadBlockchainData();
       }
