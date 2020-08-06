@@ -40,6 +40,12 @@ export default class VoterPage extends React.Component {
   async componentWillMount() {
     await this.loadWeb3()
     await this.loadBlockchainData()
+    const myFile = await fleekStorage.getFileFromHash({
+      hash: this.props.location.state.data.ipfshash,
+    })
+    this.setState({
+      question: myFile
+    })
   }
 
   async loadWeb3() {
@@ -66,17 +72,12 @@ export default class VoterPage extends React.Component {
 
     var account = await web3.eth.getAccounts()
     var fromAcc = account.toString();
-    var i = 0;
-    var solutions = [];
-    var temp = {};
-    const len = await this.state.smartContract.methods.getSolverSolutionLinks(this.props.location.state.data.question).call({ from: fromAcc });
-    for (i = 0; i < len; i++) {
-      const sollink = await this.state.smartContract.methods.solutionLinkList(this.props.location.state.data.question, i).call({ from: fromAcc });
-      const readme = await this.state.smartContract.methods.solutionLinkDetails(sollink).call({ from: fromAcc });
-      temp = { "solverAddress": readme[0], "solutionLink": sollink, "readMe": readme[1] };
-      solutions.push(temp);
-    }
-    this.setState({ solutions: solutions, loader: false });
+
+    
+      const contractSolutions = await this.state.smartContract.methods.publisherContractSol(this.props.location.state.data.ipfshash).call({ from: this.state.account });
+      console.log(contractSolutions)
+      this.setState({ contractSolutions: contractSolutions });
+    
 
   }
 
@@ -89,21 +90,23 @@ export default class VoterPage extends React.Component {
       roleValue: "",
       rolesDialog: true,
       solutions: [],
-      loader: true
+      loader: true,
+      question: "",
+      contractSolutions:[]
 
     }
   }
 
-  onAgree = (sol,ques) => {
-    this.state.smartContract.methods.agree(sol,ques).send({ from: this.state.account }).then((r) => {
+  onAgree = (sol, ques) => {
+    this.state.smartContract.methods.agree(sol, ques).send({ from: this.state.account }).then((r) => {
 
 
       // this.setState({})
 
     })
   }
-  onDisagree = (sol,ques) => {
-    this.state.smartContract.methods.disagree(sol,ques).send({ from: this.state.account }).then((r) => {
+  onDisagree = (sol, ques) => {
+    this.state.smartContract.methods.disagree(sol, ques).send({ from: this.state.account }).then((r) => {
 
 
       // this.setState({})
@@ -153,8 +156,8 @@ export default class VoterPage extends React.Component {
                   </Grid>
                   <Grid item xs={12} md={12}>
                     <Typography color="textSecondary" variant="h6" gutterBottom>
-                      <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.props.location.state.data.question} target="_blank" >
-                        {this.props.location.state.data.question}  </a>
+
+                      {this.state.question}
                     </Typography>
 
                   </Grid>
@@ -202,13 +205,13 @@ export default class VoterPage extends React.Component {
                         </Grid>
                         <Grid item xs={4} md={4} style={{ textAlign: "center" }}>
                           <IconButton
-                            onClick={() => { this.onAgree(s.solutionLink,this.props.location.state.data.question) }} >
+                            onClick={() => { this.onAgree(s.solutionLink, this.props.location.state.data.ipfshash) }} >
                             <Icon>
                               thumb_up_alt
                       </Icon>
                           </IconButton>
                           <IconButton
-                            onClick={() => { this.onDisagree(s.solutionLink,this.props.location.state.data.question) }} >
+                            onClick={() => { this.onDisagree(s.solutionLink, this.props.location.state.data.ipfshash) }} >
                             <Icon>
                               thumb_down_alt
                       </Icon>
