@@ -55,10 +55,10 @@ export default class PublisherPage extends React.Component {
     await this.loadWeb3()
     await this.loadBlockchainData()
   }
-  async componentWillReceiveProps(prev, next) {
-    this.setState({});
-    await this.loadBlockchainData()
-  }
+  // async componentWillReceiveProps(prev, next) {
+  //   this.setState({});
+  //   await this.loadBlockchainData()
+  // }
 
   async loadWeb3() {
     if (window.ethereum) {
@@ -103,17 +103,19 @@ export default class PublisherPage extends React.Component {
   }
   onContractSol = async (ques) => {
     const contractSolutions = await this.state.smartContract.methods.publisherContractSol(ques).call({ from: this.state.account });
+    console.log(contractSolutions)
     this.setState({ contractSolutions: contractSolutions });
   }
   onDappSol = async (ques) => {
     const dappSolutions = await this.state.smartContract.methods.dappSol(ques).call({ from: this.state.account });
     this.setState({ dappSolutions: dappSolutions });
   }
-   getQuestion = async(val) => {
-    const myFile = await fleekStorage.getFileFromHash({
-      hash: val,
-    })
-    return myFile
+  getQuestion = async (val) => {
+    console.log(val)
+    // const myFile = await fleekStorage.getFileFromHash({
+    //   hash: val,
+    // })
+    // return myFile;
   }
 
   render() {
@@ -227,7 +229,8 @@ export default class PublisherPage extends React.Component {
                       <TableHead>
                         <TableRow>
                           <TableCell>Question</TableCell>
-                          <TableCell align="right">Reward</TableCell>
+                          <TableCell align="center"> Dapp Reward</TableCell>
+                          <TableCell align="center"> Contract Reward</TableCell>
                           <TableCell align="right">Timestamp</TableCell>
                           <TableCell align="right">View</TableCell>
                         </TableRow>
@@ -236,18 +239,17 @@ export default class PublisherPage extends React.Component {
                         {this.state.questions.map((row) => (
                           <TableRow key={row.name}>
                             <TableCell component="th" scope="row">
-                              <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + row.question} target="_blank" >
-                                {row.question}
-                                {this.getQuestion(row.ipfshash)}
-                              </a>
+                              {/* {row.question} */}
+                              {/* {this.getQuestion(row.ipfshash)} */}
                             </TableCell>
-                            <TableCell align="right">{row.reward}</TableCell>
-                            <TableCell align="right">{row.timestamp}</TableCell>
+                            <TableCell align="center">{window.web3.utils.fromWei(row.dappReward, 'ether')}</TableCell>
+                            <TableCell align="center">{window.web3.utils.fromWei(row.contractReward, 'ether')}</TableCell>
+                            <TableCell align="right">{row.date}</TableCell>
                             <TableCell align="right">
                               <Button color="primary" variant="outlined" size="small"
                                 onClick={() => {
                                   this.setState({ viewDialog: true });
-                                  // this.viewSol(row.question);
+                                  this.onContractSol(row.ipfshash);
                                 }}
                               >View</Button>
                             </TableCell>
@@ -286,7 +288,7 @@ export default class PublisherPage extends React.Component {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {this.state.solutions.map((row) => (
+                            {this.state.contractSolutions.map((row) => (
                               <TableRow key={row.name}>
                                 <TableCell component="th" scope="row">
                                   {row.solver}
@@ -298,7 +300,7 @@ export default class PublisherPage extends React.Component {
                                     {row.readme}  </a>
                                 </TableCell>
                                 <TableCell align="right">
-                                  {row.vote}
+                                  {row.votePercent}
                                 </TableCell>
                               </TableRow>
                             ))}
