@@ -78,18 +78,16 @@ export default class QuestionsCard extends React.Component {
       web3: null,
       account: null,
       question: "",
-      dappSolveLinkDialog: false
+      dappSolveLinkDialog: false,
+      file: ""
     }
   }
   captureFile = (event) => {
     event.preventDefault()
     const file = event.target.files[0]
-    const reader = new window.FileReader()
-    reader.readAsArrayBuffer(file)
-    reader.onloadend = () => {
-      this.setState({ buffer: Buffer(reader.result) })
-    }
+    this.setState({ file: file })
   }
+
 
   onSubmit = async () => {
 
@@ -99,10 +97,11 @@ export default class QuestionsCard extends React.Component {
       apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
       apiSecret: 'GMFzg7TFJC2fjhwoz9slkfnncmV/TAHK/4WVeI0qpYY=',
       key: this.state.account + date,
-      data: this.state.buffer,
+      data: this.state.file,
+
     });
     if (uploadedFile) {
-      console.log(uploadedFile.publicUrl)
+
       this.state.smartContract.methods.pushSolution(this.props.data.ipfshash, this.state.ethFiddleLink, uploadedFile.publicUrl).send({ from: this.state.account }).then((r) => {
 
         return window.location.reload();
@@ -111,17 +110,17 @@ export default class QuestionsCard extends React.Component {
       })
     }
   }
-  onDappSubmit=async ()=>{
+  onDappSubmit = async () => {
     var today = new Date();
     var date = today.getDate() + "-" + parseInt(today.getMonth() + 1) + "-" + today.getFullYear();
     const uploadedFile = await fleekStorage.upload({
       apiKey: 'U3QGDwCkWltjBLGG1hATUg==',
       apiSecret: 'GMFzg7TFJC2fjhwoz9slkfnncmV/TAHK/4WVeI0qpYY=',
       key: this.state.account + date,
-      data: this.state.buffer,
+      data: this.state.dappVideoLink,
     });
     if (uploadedFile) {
-      console.log(uploadedFile.publicUrl)
+
       this.state.smartContract.methods.pushDapp(this.props.data.ipfshash, uploadedFile.publicUrl).send({ from: this.state.account }).then((r) => {
 
         return window.location.reload();
