@@ -97,14 +97,22 @@ export default class PublisherPage extends React.Component {
       address: '',
       smartContract: null,
       contractSolutions: [],
-      dappSolutions: []
+      dappSolutions: [],
+      dappSolutionDialog: false
 
     }
   }
   onContractSol = async (ques) => {
+    var arr = []
     const contractSolutions = await this.state.smartContract.methods.publisherContractSol(ques).call({ from: this.state.account });
     console.log(contractSolutions)
-    this.setState({ contractSolutions: contractSolutions });
+    for (var i = 0; i < contractSolutions.length; i++) {
+      for (var j = 0; j < contractSolutions[i].length; j++) {
+        arr.push((contractSolutions[i])[j])
+      }
+    }
+    console.log(arr)
+    this.setState({ contractSolutions: arr });
   }
   onDappSol = async (ques) => {
     const dappSolutions = await this.state.smartContract.methods.dappSol(ques).call({ from: this.state.account });
@@ -252,6 +260,16 @@ export default class PublisherPage extends React.Component {
                                   this.onContractSol(row.ipfshash);
                                 }}
                               >View</Button>
+                              {
+                                row.typeSol === "dapp" &&
+                                <Button color="primary" variant="outlined" size="small"
+                                  onClick={() => {
+                                    this.setState({ dappSolutionDialog: true });
+                                    // this.onContractSol(row.ipfshash);
+                                  }}
+                                >Dapp</Button>
+                              }
+
                             </TableCell>
                           </TableRow>
                         ))}
@@ -288,22 +306,24 @@ export default class PublisherPage extends React.Component {
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {this.state.contractSolutions.map((row) => (
-                              <TableRow key={row.name}>
+                            {/* {this.state.contractSolutions.map((row) => ( */}
+                            {this.state.contractSolutions.length > 0 &&
+                              <TableRow >
                                 <TableCell component="th" scope="row">
-                                  {row.solver}
+                                  {this.state.contractSolutions[0]}
                                 </TableCell>
-                                <TableCell align="right"><a style={{ fontSize: 15 }} href={row.solutionLink} target="_blank" >{row.solutionLink}</a></TableCell>
+                                <TableCell align="right"><a style={{ fontSize: 15 }} href={this.state.contractSolutions[1]} target="_blank" >{this.state.contractSolutions[1]}</a></TableCell>
 
                                 <TableCell align="right">
-                                  <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + row.readme} target="_blank" >
-                                    {row.readme}  </a>
+                                  <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.state.contractSolutions[2]} target="_blank" >
+                                    {this.state.contractSolutions[2]}  </a>
                                 </TableCell>
                                 <TableCell align="right">
-                                  {row.votePercent}
+                                  {this.state.contractSolutions[3]}
                                 </TableCell>
                               </TableRow>
-                            ))}
+                            }
+                            {/* ))} */}
                           </TableBody>
                         </Table>
                       </Grid>
@@ -314,6 +334,61 @@ export default class PublisherPage extends React.Component {
                   <Button
                     onClick={() => {
                       this.setState({ viewDialog: false });
+                    }}
+                    color="primary"
+                    variant="outlined"
+                  >
+                    Close
+          </Button>
+                </DialogActions>
+              </Dialog>
+              <Dialog
+                open={this.state.dappSolutionDialog}
+                maxWidth={"md"}
+                fullWidth={true}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">View solutions for Dapp </DialogTitle>
+                <Grid container>
+                  <DialogContent>
+                    <Grid container spacing={2} item xs={12} md={12}>
+                      <Grid item xs={12} md={12}>
+                        <Table aria-label="simple table">
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>Video Link</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody>
+                            {/* {this.state.contractSolutions.map((row) => ( */}
+                            {/* {this.state.contractSolutions.length > 0 &&
+                              <TableRow >
+                                <TableCell component="th" scope="row">
+                                  {this.state.contractSolutions[0]}
+                                </TableCell>
+                                <TableCell align="right"><a style={{ fontSize: 15 }} href={this.state.contractSolutions[1]} target="_blank" >{this.state.contractSolutions[1]}</a></TableCell>
+
+                                <TableCell align="right">
+                                  <a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + this.state.contractSolutions[2]} target="_blank" >
+                                    {this.state.contractSolutions[2]}  </a>
+                                </TableCell>
+                                <TableCell align="right">
+                                  {this.state.contractSolutions[3]}
+                                </TableCell>
+                              </TableRow>
+                            } */}
+                            {/* ))} */}
+                          </TableBody>
+                        </Table>
+                      </Grid>
+                    </Grid>
+                  </DialogContent>
+                </Grid>
+                <DialogActions>
+                  <Button
+                    onClick={() => {
+                      this.setState({ dappSolutionDialog: false });
                     }}
                     color="primary"
                     variant="outlined"
