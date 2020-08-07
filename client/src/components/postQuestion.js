@@ -82,7 +82,7 @@ export default class PostPublisher extends React.Component {
       account: accounts[0],
       loader: true
     })
-    const smartContract = new web3.eth.Contract(contractABI, "0xbbfe5fb0e14cef295789dff039d29c90d4ed7b76")
+    const smartContract = new web3.eth.Contract(contractABI, "0xfa85e3187a9642619c810fa2059e045271423c9a")
     this.setState({ smartContract })
 
 

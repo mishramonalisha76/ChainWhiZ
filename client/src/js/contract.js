@@ -22,189 +22,6 @@ export const contractABI =
 		"inputs": [
 			{
 				"internalType": "string",
-				"name": "sol",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "quesHash",
-				"type": "string"
-			}
-		],
-		"name": "disagree",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "questionIpfs",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "quesReward",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "quesDappReward",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "dateTime",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "start",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "end",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "typeOfQues",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "dappTime",
-				"type": "uint256"
-			}
-		],
-		"name": "publisherUploadQues",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "quesHash",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "dapp",
-				"type": "string"
-			}
-		],
-		"name": "pushDapp",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "quesHash",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "sol",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "readMeHash",
-				"type": "string"
-			}
-		],
-		"name": "pushSolution",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "quesHash",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "dapp",
-				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "solver",
-				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "typeOfQues",
-				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "pub",
-				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "solutionLink",
-				"type": "string"
-			}
-		],
-		"name": "setContractDapp",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "quesHash",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "typeOfQues",
-				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "solver",
-				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "solutionLink",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "readMe",
-				"type": "string"
-			},
-			{
-				"internalType": "address",
-				"name": "pub",
-				"type": "address"
-			}
-		],
-		"name": "setContractResult",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
 				"name": "quesHash",
 				"type": "string"
 			}
@@ -230,6 +47,24 @@ export const contractABI =
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "sol",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "quesHash",
+				"type": "string"
+			}
+		],
+		"name": "disagree",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -409,6 +244,105 @@ export const contractABI =
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "questionIpfs",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "quesReward",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "quesDappReward",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "dateTime",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "start",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "end",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "typeOfQues",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "dappTime",
+				"type": "uint256"
+			}
+		],
+		"name": "publisherUploadQues",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "quesHash",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "dapp",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "reward",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "publisher",
+				"type": "address"
+			}
+		],
+		"name": "pushDapp",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "quesHash",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "sol",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "readMeHash",
+				"type": "string"
+			}
+		],
+		"name": "pushSolution",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "questions",
 		"outputs": [
@@ -501,6 +435,117 @@ export const contractABI =
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "returnDappProfile",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "ipfshash",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "videoLink",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "pub",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dappreward",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct IPFS.dappProfile[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "quesHash",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "dapp",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "solver",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "typeOfQues",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "pub",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "solutionLink",
+				"type": "string"
+			}
+		],
+		"name": "setContractDapp",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "quesHash",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "typeOfQues",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "solver",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "solutionLink",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "readMe",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "pub",
+				"type": "address"
+			}
+		],
+		"name": "setContractResult",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ]
