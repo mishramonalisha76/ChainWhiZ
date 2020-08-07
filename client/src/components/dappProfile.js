@@ -127,7 +127,8 @@ export default class DappPage extends React.Component {
                                     <TableCell align="center">{row.pub}</TableCell>
                                     <TableCell align="center">{row.ipfshash}</TableCell>
                                    
-                                    <TableCell align="right">{row.videoLink}</TableCell>
+                                    <TableCell align="right"><a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + row.videoLink} target="_blank" >
+                              {row.videoLink}  </a></TableCell>
                                     <TableCell align="center">{window.web3.utils.fromWei(row.dappreward, 'ether')}</TableCell>
                                     <TableCell align="right">
                                         <Link to={{
