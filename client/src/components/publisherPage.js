@@ -98,7 +98,8 @@ export default class PublisherPage extends React.Component {
       smartContract: null,
       contractSolutions: [],
       dappSolutions: [],
-      dappSolutionDialog: false
+      dappSolutionDialog: false,
+      currentQues:''
 
     }
   }
@@ -265,7 +266,7 @@ export default class PublisherPage extends React.Component {
                                 row.typeSol === "dapp" &&
                                 <Button color="primary" variant="outlined" size="small"
                                   onClick={() => {
-                                    this.setState({ dappSolutionDialog: true });
+                                    this.setState({ dappSolutionDialog: true , currentQues:row});
                                     this.onDappSol(row.ipfshash);
                                   }}
                                 >Dapp</Button>
@@ -377,12 +378,20 @@ export default class PublisherPage extends React.Component {
                                     {this.state.dappSolutions[1]}  </a>
                                 </TableCell>
                                 <TableCell component="th" scope="row">
+                                  <Link to={{
+                                       pathname: "escrow_section",
+                                        state: {
+                                        data: this.state.currentQues,
+                                        dapp:this.state.dappSolutions
+                                        }
+                                       }}>
                                 <Button color="primary" variant="outlined" size="small"
                                   onClick={() => {
                                     this.setState({ dappSolutionDialog: true });
                                     //this.onDappSol(row.ipfshash);
                                   }}
                                 >Approve</Button>
+                                </Link>
                                 </TableCell>
                               </TableRow>
                             }
