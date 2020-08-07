@@ -1,7 +1,7 @@
 
 
 //Write your own contracts here. Currently compiles using solc v0.4.15+commit.bbb8e64f.
-pragma solidity >=0.4.22 <0.7.0;
+pragma solidity >=0.4.22 <=0.7.0;
 pragma experimental ABIEncoderV2;
 contract IPFS {
    
@@ -29,6 +29,7 @@ contract IPFS {
         
          }
   
+    
 
      struct quessmartContract{
             address[] solver;
@@ -51,6 +52,14 @@ contract IPFS {
            address[] disagree;
           
             }
+    struct dappProfile{
+        string ipfshash;
+        
+        string videoLink;
+        address pub;
+        uint256 dappreward;
+        
+    }
 
 
 
@@ -59,7 +68,7 @@ mapping(address=>mapping(string=>quesContractDetails[]))publisherContractProfile
 quesContractDetails[] quesContract;
 
 
-
+mapping(address => dappProfile[])dappProfileDisplay;
 mapping(string =>uint256) contractDetailsIndex;
 
 
@@ -72,7 +81,7 @@ mapping(string => mapping(address => bool)) voted;
 mapping(string => mapping(string =>uint256)) solIndex;
 
 mapping(address=>mapping(string=>string))pubQuesIndex;
-mapping(string => mapping(string=>uint256)) index;
+mapping(string => mapping(string=>uint256) )index;
 mapping(string => uint256) maxVotedIndex;
 
 
@@ -110,6 +119,10 @@ mapping(string => uint256) maxVotedIndex;
 
            
          publisherContractProfile[msg.sender][typeOfQues].push(quesContract[contractDetailsIndex[questionIpfs]]);
+         if((keccak256(bytes(typeOfQues)) == keccak256(bytes("dapp"))))
+         {
+             publisherContractProfile[msg.sender]["smart contract"].push(quesContract[contractDetailsIndex[questionIpfs]]);
+         }
           
   
     }
@@ -132,14 +145,28 @@ function questions() public view returns(quesContractDetails[] memory){
 
 //push dapp solution
 
-function pushDapp(string memory quesHash,string memory dapp) public
+function pushDapp(string memory quesHash,string memory dapp,uint256 reward,address publisher) public
 {
     
       quesdappSolDetails[quesHash].dappHash.push(dapp);
       quesdappSolDetails[quesHash].dappSolver.push(msg.sender);
+      dappProfileDisplay[msg.sender].push(dappProfile({
+          ipfshash:quesHash,
+          videoLink:dapp,
+          dappreward:reward,
+          pub:publisher
+      })
+          );
         
     
 }
+//returning for dapp dappProfile
+function returnDappProfile() public view returns(dappProfile[] memory){
+
+   return   dappProfileDisplay[msg.sender];
+    
+    }
+    
 
 
 //returning dapp solution lists

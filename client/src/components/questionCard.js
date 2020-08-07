@@ -58,7 +58,7 @@ export default class QuestionsCard extends React.Component {
       account: accounts[0],
       loader: true
     })
-    const smartContract = new web3.eth.Contract(contractABI, "0xbbfe5fb0e14cef295789dff039d29c90d4ed7b76")
+    const smartContract = new web3.eth.Contract(contractABI, "0xfa85e3187a9642619c810fa2059e045271423c9a")
     this.setState({ smartContract })
 
 
@@ -121,7 +121,7 @@ export default class QuestionsCard extends React.Component {
     });
     if (uploadedFile) {
 
-      this.state.smartContract.methods.pushDapp(this.props.data.ipfshash, uploadedFile.publicUrl).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.pushDapp(this.props.data.ipfshash, uploadedFile.publicUrl,this.props.data.dappReward,this.props.data.publisher).send({ from: this.state.account }).then((r) => {
 
         return window.location.reload();
         // this.setState({})

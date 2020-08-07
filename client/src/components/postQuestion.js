@@ -82,7 +82,7 @@ export default class PostPublisher extends React.Component {
       account: accounts[0],
       loader: true
     })
-    const smartContract = new web3.eth.Contract(contractABI, "0xbbfe5fb0e14cef295789dff039d29c90d4ed7b76")
+    const smartContract = new web3.eth.Contract(contractABI, "0xfa85e3187a9642619c810fa2059e045271423c9a")
     this.setState({ smartContract })
 
 
@@ -163,7 +163,7 @@ export default class PostPublisher extends React.Component {
 
     console.log(uploadedFile);
     if (uploadedFile) {
-      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, window.web3.utils.toWei(this.state.postReward, 'ether'), 0, date, timeStart, this.state.noOfDays * 24 * 3600, "smart contract", 0).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.publisherUploadQues(uploadedFile.hash, window.web3.utils.toWei(this.state.postReward, 'ether'), 0, date, timeStart, new Date().setDate(new Date().getDate() + this.state.noOfDays), "smart contract", 0).send({ from: this.state.account }).then((r) => {
         this.loadBlockchainData();
 
 
