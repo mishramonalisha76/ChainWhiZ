@@ -15,6 +15,7 @@ import HomePage from "./components/homePage";
 import VoterPage from "./components/voterPage";
 import PublisherPage from "./components/publisherPage";
 import Footer from "./components/footer";
+import EscrowPage from "./components/escrowPage"
 export default class App extends React.Component {
   render() {
     return (
@@ -24,6 +25,7 @@ export default class App extends React.Component {
           {/* <Route exact path="/get_roles" component={MaticPage} /> */}
           <Route exact path="/voter_section" component={VoterPage} />
           <Route exact path="/publisher_section" component={PublisherPage} />
+          <Route exact path="/escrow_section" component={EscrowPage} />
         </Switch>
       </BrowserRouter>
 
