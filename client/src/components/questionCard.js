@@ -102,7 +102,7 @@ export default class QuestionsCard extends React.Component {
     });
     if (uploadedFile) {
 
-      this.state.smartContract.methods.pushSolution(this.props.data.ipfshash, this.state.ethFiddleLink, uploadedFile.publicUrl).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.pushSolution(this.props.data.ipfshash, this.state.ethFiddleLink, uploadedFile.hash).send({ from: this.state.account }).then((r) => {
 
         return window.location.reload();
         // this.setState({})
@@ -121,7 +121,7 @@ export default class QuestionsCard extends React.Component {
     });
     if (uploadedFile) {
 
-      this.state.smartContract.methods.pushDapp(this.props.data.ipfshash, uploadedFile.publicUrl,this.props.data.dappReward,this.props.data.publisher).send({ from: this.state.account }).then((r) => {
+      this.state.smartContract.methods.pushDapp(this.props.data.ipfshash, uploadedFile.hash,this.props.data.dappReward,this.props.data.publisher).send({ from: this.state.account }).then((r) => {
 
         return window.location.reload();
         // this.setState({})
@@ -166,7 +166,7 @@ export default class QuestionsCard extends React.Component {
         <CardActions>
           {
 
-            (this.props.type === "Dapper" && this.props.data.typeSol === "dapp" && new Date().setDate(new Date().getDate()) > this.props.data.timeEnd)
+            (this.props.type === "Dapper" && this.props.data.typeSol === "dapp" && new Date().setDate(new Date().getDate()) > this.props.data.timeEnd )
             //  && this.props.data.label) 
             &&
             <Button

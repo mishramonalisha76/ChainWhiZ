@@ -3,11 +3,11 @@ import { contractABI } from "../js/contract";
 
 import Web3 from "web3";
 import {
-  Button,
-  IconButton,
-  Icon,
-  Grid,
-  TextField
+    Button,
+    IconButton,
+    Icon,
+    Grid,
+    TextField
 } from "@material-ui/core";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -51,7 +51,7 @@ export default class DappPage extends React.Component {
     async componentWillMount() {
         await this.loadWeb3()
         await this.loadBlockchainData()
-        
+
     }
 
     async loadWeb3() {
@@ -74,12 +74,12 @@ export default class DappPage extends React.Component {
         const accounts = await web3.eth.getAccounts()
         this.setState({ account: accounts[0] })
         const smartContract = new web3.eth.Contract(contractABI, "0xfa85e3187a9642619c810fa2059e045271423c9a")
-        this.setState({ smartContract })
+        this.setState({ smartContract: smartContract })
 
         // var account = await web3.eth.getAccounts()
 
-        const dappSolutions = await this.state.smartContract.methods.returnDappProfile().call({ from: this.state.account });
-
+        const dappSolutions = await smartContract.methods.returnDappProfile().call({ from: this.state.account });
+        console.log(dappSolutions)
         this.setState({ dappSolutions: dappSolutions });
 
 
@@ -108,31 +108,42 @@ export default class DappPage extends React.Component {
                     <Table aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Question</TableCell>
-                                <TableCell align="center"> Dapp Reward</TableCell>
-                                <TableCell align="center"> Contract Reward</TableCell>
-                                <TableCell align="right">Timestamp</TableCell>
+                                {/* <TableCell>Question</TableCell> */}
+                                <TableCell align="center"> Publisher's address</TableCell>
+                                <TableCell align="center"> Question</TableCell>
+                                <TableCell align="right"> Video Link</TableCell>
+                                <TableCell align="right">Dapp Reward</TableCell>
                                 <TableCell align="right">View</TableCell>
+
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {this.state.questions.map((row) => (
+                            {this.state.dappSolutions.map((row) => (
                                 <TableRow key={row.name}>
-                                    <TableCell component="th" scope="row">
-                                        {/* {row.question} */}
-                                        {/* {this.getQuestion(row.ipfshash)} */}
-                                    </TableCell>
-                                    <TableCell align="center">{window.web3.utils.fromWei(row.dappReward, 'ether')}</TableCell>
-                                    <TableCell align="center">{window.web3.utils.fromWei(row.contractReward, 'ether')}</TableCell>
-                                    <TableCell align="right">{row.date}</TableCell>
+                                    {/* <TableCell component="th" scope="row"> */}
+                                    {/* {row.question} */}
+                                    {/* {this.getQuestion(row.ipfshash)} */}
+                                    {/* </TableCell> */}
+                                    <TableCell align="center">{row.pub}</TableCell>
+                                    <TableCell align="center">{row.ipfshash}</TableCell>
+                                   
+                                    <TableCell align="right"><a style={{ fontSize: 15 }} href={"https://ipfs.infura.io/ipfs/" + row.videoLink} target="_blank" >
+                              {row.videoLink}  </a></TableCell>
+                                    <TableCell align="center">{window.web3.utils.fromWei(row.dappreward, 'ether')}</TableCell>
                                     <TableCell align="right">
-                                        <Button color="primary" variant="outlined" size="small"
-                                            onClick={() => {
-                                                this.setState({ viewDialog: true });
-                                                this.onContractSol(row.ipfshash);
-                                            }}
-                                        >View</Button>
-                                        {
+                                        <Link to={{
+                                            pathname: "escrow_section_dapp",
+                                            state: {
+                                                data: row,
+                                                address:this.state.account
+
+                                            }
+                                        }}>
+                                            <Button color="primary" variant="outlined" size="small"
+
+                                            >View</Button>
+                                        </Link>
+                                        {/* {
                                             row.typeSol === "dapp" &&
                                             <Button color="primary" variant="outlined" size="small"
                                                 onClick={() => {
@@ -140,7 +151,7 @@ export default class DappPage extends React.Component {
                                                     this.onDappSol(row.ipfshash);
                                                 }}
                                             >Dapp</Button>
-                                        }
+                                        } */}
 
                                     </TableCell>
                                 </TableRow>
@@ -150,7 +161,7 @@ export default class DappPage extends React.Component {
                 </Grid>
 
 
-                <Footer />
+                <Footer  />
             </div>
         )
     }
