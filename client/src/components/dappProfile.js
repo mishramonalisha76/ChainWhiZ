@@ -74,12 +74,12 @@ export default class DappPage extends React.Component {
         const accounts = await web3.eth.getAccounts()
         this.setState({ account: accounts[0] })
         const smartContract = new web3.eth.Contract(contractABI, "0xfa85e3187a9642619c810fa2059e045271423c9a")
-        this.setState({ smartContract })
+        this.setState({ smartContract: smartContract })
 
         // var account = await web3.eth.getAccounts()
-
-        const dappSolutions = await this.state.smartContract.methods.returnDappProfile().call({ from: this.state.account });
-
+       
+        const dappSolutions = await smartContract.methods.returnDappProfile().call({ from: this.state.account });
+        console.log(dappSolutions)
         this.setState({ dappSolutions: dappSolutions });
 
 
@@ -108,31 +108,34 @@ export default class DappPage extends React.Component {
                     <Table aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Question</TableCell>
-                                <TableCell align="center"> Dapp Reward</TableCell>
-                                <TableCell align="center"> Contract Reward</TableCell>
-                                <TableCell align="right">Timestamp</TableCell>
+                                
+                                <TableCell align="left"> Publisher's address</TableCell>
+                                <TableCell align="center"> Question</TableCell>
+                                <TableCell align="right"> Video Link</TableCell>
+                                <TableCell align="right">Dapp Reward</TableCell>
                                 <TableCell align="right">View</TableCell>
+
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {this.state.questions.map((row) => (
+                            {this.state.dappSolutions.map((row) => (
                                 <TableRow key={row.name}>
                                     <TableCell component="th" scope="row">
                                         {/* {row.question} */}
                                         {/* {this.getQuestion(row.ipfshash)} */}
                                     </TableCell>
-                                    <TableCell align="center">{window.web3.utils.fromWei(row.dappReward, 'ether')}</TableCell>
-                                    <TableCell align="center">{window.web3.utils.fromWei(row.contractReward, 'ether')}</TableCell>
-                                    <TableCell align="right">{row.date}</TableCell>
+                                    <TableCell align="center">{row.pub}</TableCell>
+                                    <TableCell align="center">{row.ipfshash}</TableCell>
+                                    <TableCell align="right">{row.videoLink}</TableCell>
+                                    <TableCell align="center">{window.web3.utils.fromWei(row.dappreward, 'ether')}</TableCell>
                                     <TableCell align="right">
                                         <Button color="primary" variant="outlined" size="small"
                                             onClick={() => {
-                                                this.setState({ viewDialog: true });
-                                                this.onContractSol(row.ipfshash);
+                                                // this.setState({ viewDialog: true });
+                                                // this.onContractSol(row.ipfshash);
                                             }}
                                         >View</Button>
-                                        {
+                                        {/* {
                                             row.typeSol === "dapp" &&
                                             <Button color="primary" variant="outlined" size="small"
                                                 onClick={() => {
@@ -140,7 +143,7 @@ export default class DappPage extends React.Component {
                                                     this.onDappSol(row.ipfshash);
                                                 }}
                                             >Dapp</Button>
-                                        }
+                                        } */}
 
                                     </TableCell>
                                 </TableRow>
