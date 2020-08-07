@@ -104,8 +104,8 @@ export default class DappPage extends React.Component {
     render() {
         return (
             <div>
-                <Grid item xs={12} md={12}>
-                    <Table aria-label="simple table">
+                <Grid item xs={12} md={12} >
+                    <Table aria-label="simple table" >
                         <TableHead>
                             <TableRow>
                                 
@@ -116,8 +116,8 @@ export default class DappPage extends React.Component {
                                 <TableCell align="right">View</TableCell>
 
                             </TableRow>
-                        </TableHead>
-                        <TableBody>
+                        </TableHead >
+                        <TableBody >
                             {this.state.dappSolutions.map((row) => (
                                 <TableRow key={row.name}>
                                     <TableCell component="th" scope="row">
@@ -153,7 +153,7 @@ export default class DappPage extends React.Component {
                 </Grid>
 
 
-                <Footer />
+                <Footer style={{ position: "absolute",bottom: "0",width:"100%",height: "50px",paddingTop:"50px"}} />
             </div>
         )
     }
