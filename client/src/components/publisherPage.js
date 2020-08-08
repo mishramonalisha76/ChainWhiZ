@@ -84,7 +84,7 @@ export default class PublisherPage extends React.Component {
     const questions = await this.state.smartContract.methods.getAllContract("dapp").call({ from: fromAcc })
     this.setState({ questions: questions })
     console.log(questions)
-    console.log("hello")
+  
 
   }
 
