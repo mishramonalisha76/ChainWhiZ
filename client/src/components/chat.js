@@ -38,12 +38,21 @@ export default class Chat extends Component {
         console.log(posts)
 
         // you can also specify a number of posts you want
+<<<<<<< HEAD
       
         console.log(posts)
         this.setState({ posts: posts });
     }
     async updatePosts() {
         thread.onUpdate(async() => {
+=======
+        // const posts = await this.state.thread.getPosts(20)
+        // console.log(posts)
+        this.setState({ posts: posts });
+    }
+    async updatePosts() {
+        thread.onUpdate(async () => {
+>>>>>>> f77a3d768f8109c3392ca0f3db677926a3b24690
             const posts = await thread.getPosts()
             console.log(posts)
             this.setState({ posts: posts });
