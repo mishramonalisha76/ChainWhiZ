@@ -20,7 +20,7 @@ export default class Chat extends Component {
     }
 
     async createSpace() {
-        const space = await box.openSpace('mySpace')
+        const space = await this.state.box.openSpace('mySpace')
         console.log(space);
         this.setState({ space: space });
     }
@@ -43,21 +43,21 @@ export default class Chat extends Component {
         this.setState({ posts: posts });
     }
     async updatePosts() {
-        thread.onUpdate(async() => {
-            const posts = await thread.getPosts()
+       this.state. thread.onUpdate(async() => {
+            const posts = await this.state.thread.getPosts()
             console.log(posts)
             this.setState({ posts: posts });
         })
     }
     async viewMembers() {
-        const userList = await thread.listMembers()
+        const userList = await this.state.thread.listMembers()
         this.setState({ userList: userList });
     }
     async addPosts(msg) {
-        await thread.post(msg);
+        await this.state.thread.post(msg);
     }
     async leaveThread() {
-        await thread.close();
+        await this.state.thread.close();
     }
 
     render() {
