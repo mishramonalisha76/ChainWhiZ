@@ -8,10 +8,10 @@ export default class Chat extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            space=null,
-            thread=null,
-            posts=null,
-            userList=null
+            space:null,
+            thread:null,
+            posts:null,
+            userList:null
         }
     }
 
@@ -34,12 +34,12 @@ export default class Chat extends Component {
         console.log(posts)
 
         // you can also specify a number of posts you want
-        const posts = await this.state.thread.getPosts(20)
-        console.log(posts)
+        // const posts = await this.state.thread.getPosts(20)
+        // console.log(posts)
         this.setState({ posts: posts });
     }
     async updatePosts() {
-        thread.onUpdate(() => {
+        thread.onUpdate(async () => {
             const posts = await thread.getPosts()
             console.log(posts)
             this.setState({ posts: posts });
