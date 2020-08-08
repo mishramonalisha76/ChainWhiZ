@@ -3,15 +3,19 @@ import Box from '3box';
 
 
 export default class Chat extends Component {
-
+    async componentWillMount(){
+        const box = await Box.openBox("0x0E16571A72f36743e53B15c2aF412cfEC9EA4223", window.ethereum, {});
+     this.setState({box:box});
+    }
 
     constructor(props) {
         super(props);
         this.state = {
-            space=null,
-            thread=null,
-            posts=null,
-            userList=null
+            space:null,
+            thread:null,
+            posts:null,
+            userList:null,
+            box:null
         }
     }
 
@@ -34,12 +38,12 @@ export default class Chat extends Component {
         console.log(posts)
 
         // you can also specify a number of posts you want
-        const posts = await this.state.thread.getPosts(20)
+      
         console.log(posts)
         this.setState({ posts: posts });
     }
     async updatePosts() {
-        thread.onUpdate(() => {
+        thread.onUpdate(async() => {
             const posts = await thread.getPosts()
             console.log(posts)
             this.setState({ posts: posts });
