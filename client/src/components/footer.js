@@ -50,7 +50,8 @@ const chainWiz = {
 //   padding:0
 // }
 const btn = {
-  color: "white"
+  color: "white",
+  
 }
 export default class Footer extends React.Component {
   constructor(props) {
