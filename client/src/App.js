@@ -31,7 +31,11 @@ export default class App extends React.Component {
           <Route exact path="/escrow_section" component={EscrowPage} />
           <Route exact path="/dapp_section" component={DappPage} />
           <Route exact path="/escrow_section_dapp" component={EscrowDappPage} />
+<<<<<<< HEAD
          {/* <Route exact path="/chat_section" component={Chat} /> */}
+=======
+          {/* <Route exact path="/chat_section" component={Chat} /> */}
+>>>>>>> 0bcc742375f059a82a3a5c3faec513d9a2d8a757
         </Switch>
       </BrowserRouter>
 

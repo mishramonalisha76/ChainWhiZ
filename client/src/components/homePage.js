@@ -195,8 +195,8 @@ export default class HomePage extends React.Component {
         <Grid container>
           <AppBar style={chainWiz} position="static">
             <Toolbar variant="dense">
-              {this.state.roleValue === "Publisher" ?
-                <Link to="/publisher_section" style={{ textDecoration: "none" }}>
+              {this.state.roleValue === "Dapper" ?
+                <Link to="/dapp_section" style={{ textDecoration: "none" }}>
                   <IconButton edge="start" color="inherit" aria-label="menu">
                     <Icon style={{ color: "white" }}>
                       supervised_user_circle
