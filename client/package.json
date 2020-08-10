@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "3box": "^1.21.0",
+    "3box-chatbox-react": "^0.3.0",
     "@fleekhq/fleek-storage-js": "^1.0.2",
     "@material-ui/core": "^4.10.1",
     "@maticnetwork/maticjs": "^2.0.0",
@@ -13,6 +14,7 @@
     "@testing-library/user-event": "^7.2.1",
     "bufferutil": "^4.0.1",
     "delay": "^4.3.0",
+    "identity-wallet": "^1.4.0",
     "ipfs-http-client": "^40.0.0",
     "maticjs": "^1.0.1",
     "node-metamask": "^1.1.2",
