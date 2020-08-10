@@ -18,7 +18,7 @@ import Footer from "./components/footer";
 import EscrowPage from "./components/escrowPage"
 import DappPage from "./components/dappProfile"
 import EscrowDappPage from "./components/escrowDapp";
-import Chat from "./components/chat";
+// import Chat from "./components/chat";
 export default class App extends React.Component {
   render() {
     return (
@@ -31,7 +31,7 @@ export default class App extends React.Component {
           <Route exact path="/escrow_section" component={EscrowPage} />
           <Route exact path="/dapp_section" component={DappPage} />
           <Route exact path="/escrow_section_dapp" component={EscrowDappPage} />
-          <Route exact path="/chat_section" component={Chat} />
+          {/* <Route exact path="/chat_section" component={Chat} /> */}
         </Switch>
       </BrowserRouter>
 
