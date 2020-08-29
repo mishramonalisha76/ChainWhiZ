@@ -34,7 +34,7 @@ import Loader from "./loader";
 import SnackBar from "./snackbar";
 import Footer from "./footer";
 import PostPublisher from "./postQuestion";
-import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router";
 import chainWizImage from "./BG2.png";
 import PublisherPage from "./publisherPage";
 const chainWiz = {
@@ -164,17 +164,15 @@ export default class HomePage extends React.Component {
     console.log(profile)
     const verified = await Box.getVerifiedAccounts(profile)
     console.log(verified)
-    // if () {
-    //   redirect = () => {
-    //     window.location.href = "https://3box.io/" + this.state.account + "/wall";
-    //     // maybe can add spinner while loading
-    //     return null;
-    //   }
+    if (Object.keys(profile). length ==0 && Object.keys(verified). length ==0) {
+      //return <Redirect to={ "https://3box.io/" + this.state.account + "/wall"} />
+      console.log(profile.email);
+     window.open(`https://3box.io/${this.state.account}/wall`)
      
-    // }
-    // else {
-    //   this.setState({ rolesDialog: true })
-    // }
+    }
+    else {
+      this.setState({ rolesDialog: true })
+    }
   }
 
   constructor(props) {
