@@ -13,7 +13,6 @@
     "@testing-library/user-event": "^7.2.1",
     "bufferutil": "^4.0.1",
     "delay": "^4.3.0",
-    "identity-wallet": "^1.4.0",
     "ipfs-http-client": "^40.0.0",
     "maticjs": "^1.0.1",
     "node-metamask": "^1.1.2",
@@ -24,9 +23,6 @@
     "social-media-icons-react": "^1.0.10",
     "utf-8-validate": "^5.0.2",
     "web3": "^1.2.8"
-  },
-  "browser": {
-    "identity-wallet": false
   },
   "scripts": {
     "start": "react-scripts start",

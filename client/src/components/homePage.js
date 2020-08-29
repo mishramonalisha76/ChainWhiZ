@@ -48,6 +48,7 @@ const chainWiz = {
 const btn = {
   color: "white"
 }
+const Box = require('3box')
 export default class HomePage extends React.Component {
   async componentDidMount() {
     await this.loadWeb3()
@@ -136,7 +137,7 @@ export default class HomePage extends React.Component {
 
     else if (this.state.role === "Voter") {
       a = regVoter();
-      
+
       if (a !== null) {
         this.loadBlockchainData();
       }
@@ -157,7 +158,24 @@ export default class HomePage extends React.Component {
       }
     }
   }
-
+   profileBox = async() => {
+    // const box = await Box.openBox(this.state.account, window.ethereum)
+    const profile = await Box.getProfile(this.state.account)
+    console.log(profile)
+    const verified = await Box.getVerifiedAccounts(profile)
+    console.log(verified)
+    // if () {
+    //   redirect = () => {
+    //     window.location.href = "https://3box.io/" + this.state.account + "/wall";
+    //     // maybe can add spinner while loading
+    //     return null;
+    //   }
+     
+    // }
+    // else {
+    //   this.setState({ rolesDialog: true })
+    // }
+  }
 
   constructor(props) {
     super(props);
@@ -219,7 +237,7 @@ export default class HomePage extends React.Component {
                 {/* <Link to="/get_roles" style={{ textDecoration: "none" }}> */}
                 <Button
                   style={btn}
-                  onClick={() => { this.setState({ rolesDialog: true }) }}
+                  onClick={() => { this.profileBox(); }}
                 >
                   Get Roles
                   </Button>
