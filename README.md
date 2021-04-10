@@ -1,4 +1,4 @@
-# EthIndia
+
 Clone the project repository
 </br>
 Go to the root folder in terminal
